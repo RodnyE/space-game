@@ -7,7 +7,19 @@
     "build": "webpack --mode=production --node-env=production"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "connect-sqlite3": "^0.9.13",
+    "dotenv": "^8.6.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.6.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth2": "^0.2.0",
+    "sequelize": "^6.19.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "sqlite3": "^5.0.6"
   },
   "buildDependencies": {
     "@babel/core": "^7.22.1",
