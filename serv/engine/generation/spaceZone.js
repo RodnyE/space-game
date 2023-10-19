@@ -1,0 +1,16 @@
+const config = require("../../../config.js");
+const { spaceZone } = require(config.HELPERS + "/db.js");
+
+const generate = async (name ,x, y ,type) => {
+    try {
+        const sz = await spaceZone.create({
+            name, x , y , type
+        });
+        if (sz) return sz;
+        else return false;
+    } catch (err) {
+        return false;
+    }
+};
+
+module.exports = generate;
