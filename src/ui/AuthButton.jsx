@@ -1,5 +1,5 @@
 
-import "./AuthButton/AuthButton.css"
+import "./AuthButton/style.css"
 
 import googleImg from "assets/google-login.png"
 import facebookImg from "assets/facebook-login.png"
