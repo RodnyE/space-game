@@ -1,63 +1,82 @@
+ 
+const cfg = require("./config");
+const path = require("path"); 
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const cfg = require('./config')
-const path = require('path');
-const isProduction = process.env.NODE_ENV == 'production';
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const pages = cfg.pages;
 
+module.exports = { 
 
-module.exports = {
-    // main file
-    entry: path.join(cfg.SRC, 'index.js'),
-    mode: process.env.NODE_ENV, // production or development
-    
-    // main export file
-    output: {
-        path: cfg.DIST,
-        filename: "bundle.js",
-    },
-    
-    // if start a dev server
+    // Main files
+    entry: pages.reduce((obj, page) => {
+        obj[page] = `${cfg.SRC}/pages/${page}/index.js`; 
+        return obj;
+    }, {}),
+
+    // Production or development
+    mode: process.env.NODE_ENV, 
+
+    // When start a dev server
     devServer: {
         contentBase: cfg.DIST,
         port: cfg.PORT,
-        host: 'localhost',
+        host: "localhost",
     },
     
+    optimization: {
+        splitChunks: {
+          chunks: "all",
+        },
+    },
+
+    // main export file
+    output: {
+        path: cfg.DIST,
+        filename: "public/[name].js",
+    }, 
+    
     // html export
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(cfg.PUBLIC, 'index.html'),
-        }),
-    ],
+    plugins: [].concat(
+        pages.map(
+          (page) =>
+            new HtmlWebpackPlugin({
+              template: "./public/index.html",
+              publicPath: "/",
+              filename: `${page}.html`,
+              chunks: [page],
+            })
+        )
+      ),
     
     resolve: {
         // alias imports
         alias: {
-            "ui": cfg.SRC + "/ui/ui.js",
+            "ui": cfg.SRC + "/ui",
             "utils": cfg.SRC + "/utils",
-            "context": cfg.SRC + "/views/_context.jsx",
-            
-            // programming in mobile apps
-            "eruda": isProduction ? 
-                cfg.SRC + "/utils/__eruda-fake.js" : // remove eruda in production
+            "styles": cfg.SRC + "/styles",
+            "assets": cfg.SRC + "/assets",
+           
+            // programming in mobile apps 
+            "eruda": cfg.isProduction ?  
+                cfg.SRC + "/utils/__eruda-fake.js" : // remove eruda in production 
                 "eruda",
         },
-        extensions: ["*", ".js", ".jsx"]
+        extensions: [".*", ".js", ".jsx"]
     },
     
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/i,
-                loader: 'babel-loader',
+                loader: "babel-loader",
             },
             {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader', 'postcss-loader'],
+                test: /\.(css)$/i,
+                use: ["style-loader", "css-loader", "postcss-loader"],
             },
             {
                 test: /\.(jpg|png)$/i,
-                type: 'asset',
+                type: "asset",
             },
         ],
     },
