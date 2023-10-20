@@ -61,6 +61,32 @@ const generateOnEmpty = async (x, y) => {
     }
 }
 
+const generateOnSun = async (x, y) => {
+    const nast = Rand(1, 3);
+    const nsun = Rand(1, 3);
+    const nplanet = Rand(3 , 7);
+    let taken = [];
+    for(let n = 0; n < nplanet; n++){
+        let diameter = Rand(25 , 125);
+        let temperature = Rand(-300 , 300);
+        let v = findSpace(diameter , taken);
+        if(v){
+            const vector = v.vector;
+            taken.push(v);
+            const planet = await planet(nameGen("planet") , x , y , vector.x , vector.y , diameter);
+        }
+    }
+    for(let n = 0; n < nast; n++){
+        let diameter = Rand(10 , 25);
+        let v = findSpace(diameter , taken);
+        if(v){
+            const vector = v.vector;
+            taken.push(v);
+            const ast = await asteroid(nameGen("asteroid") , x , y , vector.x , vector.y , diameter);
+        }
+    }
+}
+
 const generateSpace = async (x, y) => {
     const st = new Date().getTime();
     for (let _y = 0; _y < y; _y++) {
@@ -73,7 +99,7 @@ const generateSpace = async (x, y) => {
                             generateOnEmpty(_x, _y);
                             break;
                         case "sun":
-
+                            generateOnSun(_x , _y);
                             break;
                         case "blackhole":
 
