@@ -351,14 +351,14 @@ const randomize = (arr) => {
 
 module.exports = (type) => {
     if (type == "planet") {
-        return randomize(planets) + "-" + uid.num(Math.round(Math.random() * 3));
+        return randomize(planets) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
     } else if (type == "space") {
-        return randomize(solarSystems) + "-" + uid.num(Math.round(Math.random() * 2));
+        return randomize(solarSystems) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
     } else if (type == "asteroid") {
-        return randomize(asteroids) + "-" + uid.num(Math.round(Math.random() * 2));
+        return randomize(asteroids) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
     } else if (type == "sun") {
-        return randomize(suns) + "-" + uid.num(Math.round(Math.random() * 2));
+        return randomize(suns) + "-" + (uid.alphanum(Math.round(Math.random() * 2)  + 1).toUpperCase());
     } else if (type == "blackhole") {
-        return randomize(blackHoles) + "-" + uid.num(Math.round(Math.random() * 2));
+        return randomize(blackHoles) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
     }
 };

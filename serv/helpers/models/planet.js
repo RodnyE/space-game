@@ -1,4 +1,4 @@
-const SunModel = (DataTypes) => {
+const PlanetModel = (DataTypes) => {
     return {
         name: {
             type: DataTypes.STRING,
@@ -22,14 +22,14 @@ const SunModel = (DataTypes) => {
             allowNull: false
         },
         temperature: {
-            type: DataTypes.INTEGER, //3000 - 9000 ºc
+            type: DataTypes.INTEGER, 
             allowNull: false
         },
         diameter: {
-            type: DataTypes.INTEGER, //1m - 10m metros3
+            type: DataTypes.INTEGER, 
             allowNull: false
         }
     };
 };
 
-module.exports = SunModel;
+module.exports = PlanetModel;

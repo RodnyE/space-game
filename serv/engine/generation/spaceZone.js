@@ -1,9 +1,9 @@
 const config = require("../../../config.js");
-const { spaceZone } = require(config.HELPERS + "/db.js");
+const { SpaceZone } = require(config.HELPERS + "/db.js");
 
 const generate = async (name ,x, y ,type) => {
     try {
-        const sz = await spaceZone.create({
+        const sz = await SpaceZone.create({
             name, x , y , type
         });
         if (sz) return sz;
