@@ -117,5 +117,3 @@ else {
 
     console.log("Using static server for production mode...");
 }
-
-require("./engine/generation/generateSpace.js")(10,10);
