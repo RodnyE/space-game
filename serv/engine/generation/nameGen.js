@@ -101,6 +101,8 @@ const solarSystems = [
     "OGLE",
     "Cancri",
     "Tau Ceti",
+    "Aritme",
+    "ASAT"
 ];
 
 const suns = [
