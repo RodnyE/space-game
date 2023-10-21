@@ -66,6 +66,28 @@ const generateOnSun = async (x, y) => {
     const nsun = Rand(1, 3);
     const nplanet = Rand(3 , 7);
     let taken = [];
+    if(nsun == 1){
+      let sun1 = false;
+      while(!sun1) sun1 = await sun(nameGen("sun") , x , y , 500 , 500 , Rand(3000 , 9000) , Rand(100 , 250));
+      taken.push({vector: Vector(sun1.pos_x , sun1.pos_y) , diameter: sun1.diameter});
+    }else if(nsun == 2){
+      let sun1 = false;
+      while(!sun1) sun1 = await sun(nameGen("sun") , x , y , 500 , 375 , Rand(3000 , 9000) , Rand(100 , 250));
+      let sun2 = false;
+      while(!sun2) sun2 = await sun(nameGen("sun") , x , y , 500 , 625 , Rand(3000 , 9000) , Rand(100 , 250));
+      taken.push({vector: Vector(sun1.pos_x , sun1.pos_y) , diameter: sun1.diameter});
+      taken.push({vector: Vector(sun2.pos_x , sun2.pos_y) , diameter: sun2.diameter});
+    }else if(nsun == 3){
+      let sun1 = false;
+      while(!sun1) sun1 = await sun(nameGen("sun") , x , y , 500 , 375 , Rand(3000 , 9000) , Rand(100 , 250));
+      let sun2 = false;
+      while(!sun2) sun2 = await sun(nameGen("sun") , x , y , 375 , 625 , Rand(3000 , 9000) , Rand(100 , 250));
+      let sun3 = false;
+      while(!sun3) sun3 = await sun(nameGen("sun") , x , y , 625 , 625 , Rand(3000 , 9000) , Rand(100 , 250));
+      taken.push({vector: Vector(sun1.pos_x , sun1.pos_y) , diameter: sun1.diameter});
+      taken.push({vector: Vector(sun2.pos_x , sun2.pos_y) , diameter: sun2.diameter});
+      taken.push({vector: Vector(sun3.pos_x , sun3.pos_y) , diameter: sun3.diameter});
+    }
     for(let n = 0; n < nplanet; n++){
         let diameter = Rand(25 , 125);
         let temperature = Rand(-300 , 300);
@@ -73,7 +95,7 @@ const generateOnSun = async (x, y) => {
         if(v){
             const vector = v.vector;
             taken.push(v);
-            const planet = await planet(nameGen("planet") , x , y , vector.x , vector.y , diameter);
+            const planet = await planet(nameGen("planet") , x , y , vector.x , vector.y , temperature , diameter);
         }
     }
     for(let n = 0; n < nast; n++){
