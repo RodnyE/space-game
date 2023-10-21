@@ -357,5 +357,6 @@ module.exports = {
     Planet,
     Asteroid,
     BlackHole,
+    Player,
     Op
 };
