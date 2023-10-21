@@ -107,7 +107,13 @@ const generateOnSun = async (x, y) => {
             const ast = await asteroid(nameGen("asteroid") , x , y , vector.x , vector.y , diameter);
         }
     }
-}
+};
+
+const generateOnBlackHole = async (x, y) => {
+  let diameter = Rand(250 , 500);
+      let bh = false;
+      while(!bh) bh = await blackhole(nameGen("blackhole") , x , y , 500 , 500 , diameter);
+};
 
 const generateSpace = async (x, y) => {
     const st = new Date().getTime();
@@ -124,7 +130,7 @@ const generateSpace = async (x, y) => {
                             generateOnSun(_x , _y);
                             break;
                         case "blackhole":
-
+                            generateOnBlackHole(_x , _y);
                             break;
                         default:
                             break;
