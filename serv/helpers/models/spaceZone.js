@@ -15,7 +15,7 @@ const SpaceZoneModel = (DataTypes) => {
         },
         type: {
             type: DataTypes.STRING,
-            default: "empty"
+            defaultValue: "empty"
         }
     };
 };
