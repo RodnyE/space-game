@@ -47,7 +47,7 @@ const findSpace = (diameter, taken) => {
     return false;
 }
 
-const generateOnEmpty = async (x, y) => {
+const generateOnEmpty = async (id) => {
     const nast = Rand(3, 12);
     let taken = [];
     for (let n = 0; n < nast; n++) {
@@ -56,12 +56,12 @@ const generateOnEmpty = async (x, y) => {
         if (v) {
             const vector = v.vector;
             taken.push(v);
-            const ast = await asteroid(nameGen("asteroid"), x, y, vector.x, vector.y, diameter);
+            const ast = await asteroid(nameGen("asteroid"),id, vector.x, vector.y, diameter);
         }
     }
 }
 
-const generateOnSun = async (x, y) => {
+const generateOnSun = async (id) => {
     const nast = Rand(1, 5);
     let nsun = Rand(1, 3);
     const nplanet = Rand(3, 7);
@@ -69,22 +69,22 @@ const generateOnSun = async (x, y) => {
     let taken = [];
     if (nsun == 1) {
         let sun1 = false;
-        while (!sun1) sun1 = await sun(nameGen("sun"), x, y, 500, 500, Rand(3000, 9000), Rand(100, 250));
+        while (!sun1) sun1 = await sun(nameGen("sun"), id, 500, 500, Rand(3000, 9000), Rand(100, 250));
         taken.push({ vector: Vector(sun1.pos_x, sun1.pos_y), diameter: sun1.diameter });
     } else if (nsun == 2) {
         let sun1 = false;
-        while (!sun1) sun1 = await sun(nameGen("sun"), x, y, 500, 375, Rand(3000, 9000), Rand(100, 250));
+        while (!sun1) sun1 = await sun(nameGen("sun"), id , 500, 375, Rand(3000, 9000), Rand(100, 250));
         let sun2 = false;
-        while (!sun2) sun2 = await sun(nameGen("sun"), x, y, 500, 625, Rand(3000, 9000), Rand(100, 250));
+        while (!sun2) sun2 = await sun(nameGen("sun"), id, 500, 625, Rand(3000, 9000), Rand(100, 250));
         taken.push({ vector: Vector(sun1.pos_x, sun1.pos_y), diameter: sun1.diameter });
         taken.push({ vector: Vector(sun2.pos_x, sun2.pos_y), diameter: sun2.diameter });
     } else if (nsun == 3) {
         let sun1 = false;
-        while (!sun1) sun1 = await sun(nameGen("sun"), x, y, 500, 375, Rand(3000, 9000), Rand(100, 250));
+        while (!sun1) sun1 = await sun(nameGen("sun"), id , 500, 375, Rand(3000, 9000), Rand(100, 250));
         let sun2 = false;
-        while (!sun2) sun2 = await sun(nameGen("sun"), x, y, 375, 625, Rand(3000, 9000), Rand(100, 250));
+        while (!sun2) sun2 = await sun(nameGen("sun"), id , 375, 625, Rand(3000, 9000), Rand(100, 250));
         let sun3 = false;
-        while (!sun3) sun3 = await sun(nameGen("sun"), x, y, 625, 625, Rand(3000, 9000), Rand(100, 250));
+        while (!sun3) sun3 = await sun(nameGen("sun"), id , 625, 625, Rand(3000, 9000), Rand(100, 250));
         taken.push({ vector: Vector(sun1.pos_x, sun1.pos_y), diameter: sun1.diameter });
         taken.push({ vector: Vector(sun2.pos_x, sun2.pos_y), diameter: sun2.diameter });
         taken.push({ vector: Vector(sun3.pos_x, sun3.pos_y), diameter: sun3.diameter });
@@ -96,7 +96,7 @@ const generateOnSun = async (x, y) => {
         if (v) {
             const vector = v.vector;
             taken.push(v);
-            const p = await planet(nameGen("planet"), x, y, vector.x, vector.y, temperature, diameter);
+            const p = await planet(nameGen("planet"), id, vector.x, vector.y, temperature, diameter);
         }
     }
     for (let n = 0; n < nast; n++) {
@@ -105,15 +105,15 @@ const generateOnSun = async (x, y) => {
         if (v) {
             const vector = v.vector;
             taken.push(v);
-            const ast = await asteroid(nameGen("asteroid"), x, y, vector.x, vector.y, diameter);
+            const ast = await asteroid(nameGen("asteroid"),id, vector.x, vector.y, diameter);
         }
     }
 };
 
-const generateOnBlackHole = async (x, y) => {
+const generateOnBlackHole = async (id) => {
     let diameter = Rand(250, 500);
     let bh = false;
-    while (!bh) bh = await blackhole(nameGen("blackhole"), x, y, 500, 500, diameter);
+    while (!bh) bh = await blackhole(nameGen("blackhole"), id , 500, 500, diameter);
 };
 
 const generateSpace = async (x, y) => {
@@ -126,13 +126,13 @@ const generateSpace = async (x, y) => {
             if (_spaceZone) {
                 switch (_spaceZone.type) {
                     case "empty":
-                        generateOnEmpty(_x, _y);
+                        generateOnEmpty(_spaceZone.id);
                         break;
                     case "sun":
-                        generateOnSun(_x, _y);
+                        generateOnSun(_spaceZone.id);
                         break;
                     case "blackhole":
-                        generateOnBlackHole(_x, _y);
+                        generateOnBlackHole(_spaceZone.id);
                         break;
                     default:
                         break;

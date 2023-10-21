@@ -5,19 +5,15 @@ const SunModel = (DataTypes) => {
             unique: true,
             allowNull: false
         },
+        spacezone_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         x: {
             type: DataTypes.INTEGER,
             allowNull: false
         }, 
         y: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        pos_x: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }, 
-        pos_y: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
