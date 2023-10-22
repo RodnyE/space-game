@@ -16,6 +16,7 @@ export default function GameRenderer ({
     scene,
     onLoop = ()=>{},
     play,
+    style = {},
 }) {
     const canvasRef = useRef(null);
     const rendererRef = useRef(null);
@@ -58,6 +59,7 @@ export default function GameRenderer ({
         <canvas 
             ref={canvasRef}
             className="game-view"
+            style={style}
         />
     )
 }
