@@ -30,35 +30,7 @@ const sequelize = new Sequelize({
  *   User Model DB   *
  *********************/
 class User extends Model {
-    getData() {
-        const rows = ["user_id", "username", "acclevel"];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 User.init(
@@ -77,35 +49,7 @@ User.init(
  *   SpaceZone Model DB   *
  *********************/
 class SpaceZone extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 SpaceZone.init(
@@ -123,35 +67,7 @@ SpaceZone.init(
  *  Sun Model DB   *
  *********************/
 class Sun extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 Sun.init(
@@ -170,35 +86,7 @@ Sun.init(
  *  Planet Model DB   *
  *********************/
 class Planet extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 Planet.init(
@@ -216,35 +104,7 @@ Planet.init(
  *  Asteroid Model DB   *
  *********************/
 class Asteroid extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 Asteroid.init(
@@ -262,35 +122,7 @@ Asteroid.init(
  *  BlackHole Model DB   *
  *********************/
 class BlackHole extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 BlackHole.init(
@@ -308,35 +140,7 @@ BlackHole.init(
  *  Player Model DB   *
  *********************/
 class Player extends Model {
-    getData(r) {
-        const rows = r || [];
-        let ret = {};
-        for (let row of rows) {
-            if (this[row]) {
-                try {
-                    ret[row] = JSON.parse(this[row]);
-                } catch (err) {
-                    ret[row] = this[row];
-                }
-            }
-        }
-        return ret;
-    }
-
-    async setData(obj) {
-        let parsedObj = {};
-        for (let o in obj) {
-            if (this[o] == undefined) continue;
-            parsedObj[o] = (typeof (obj) === "object" ? JSON.stringify(obj[o]) : obj[o]);
-        }
-        try {
-            await this.update(parsedObj);
-            return true;
-        } catch (err) {
-            console.err(err);
-            return false;
-        }
-    }
+    
 }
 
 Player.init(

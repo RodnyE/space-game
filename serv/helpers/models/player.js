@@ -18,7 +18,7 @@ const UserModel = (DataTypes) => {
             type: DataTypes.JSON,
             defaultValue: {}
         },
-        world_pos: {
+        space_pos: {
             type: DataTypes.JSON,
             defaultValue: {}
         }
