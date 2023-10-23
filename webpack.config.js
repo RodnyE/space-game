@@ -77,7 +77,7 @@ module.exports = {
                 use: ["style-loader", "css-loader", "postcss-loader"],
             },
             {
-                test: /\.(jpg|png)$/i,
+                test: /\.(jpg|png|aac|mp3)$/i,
                 type: "asset",
             },
         ],
