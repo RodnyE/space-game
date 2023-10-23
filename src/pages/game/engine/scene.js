@@ -4,7 +4,7 @@ import Loader from "gl/Loader"
 import Camera from "gl/Camera"
 import Entity from "gl/Entity"
 import Container from "gl/Container"
-import createLoader from "engine/texture-loader"
+import createLoader from "engine/loader"
 
 const worldSize = 1500;
 const gx = {}; // game context
