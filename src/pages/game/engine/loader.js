@@ -6,6 +6,9 @@ import Loader from "gl/Loader"
 import shipImg from "assets/ship.png"
 import spaceImg from "assets/outer-space.png"
 
+// sound
+import spaceSnd from "assets/outer_space_01.aac"
+
 /**
  * Setup game textures 
  * @returns {Loader} 
@@ -22,6 +25,12 @@ export default function createLoader () {
         src: shipImg, 
         preprocess (tx) {
             tx.rotate = groupD8.N; 
+        }
+    })
+    loader.addSound({
+        name: "spaceSound",
+        cfg: {
+            src: [spaceSnd],
         }
     });
     
