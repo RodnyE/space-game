@@ -55,6 +55,8 @@ module.exports = {
             "utils": cfg.SRC + "/utils",
             "styles": cfg.SRC + "/styles",
             "assets": cfg.SRC + "/assets",
+            "gl": cfg.SRC + "/pages/game/gl",
+            "engine": cfg.SRC + "/pages/game/engine",
            
             // programming in mobile apps 
             "eruda": cfg.isProduction ?  
