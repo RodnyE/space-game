@@ -26,6 +26,14 @@ export default function loop () {
     camera.x += (player.x - camera.x) * 0.03;
     camera.y += (player.y - camera.y) * 0.03; 
     
+    // Zoom ease
+    if (vx || vy) {
+        camera.z += (0.89 - camera.z) * 0.01;
+    }
+    else {
+        camera.z += (1 - camera.z) * 0.01;
+    }
+    
     // Player rotation
     if (joy.s) {
         // joystick pressed !
