@@ -11,11 +11,11 @@ import {
 export default function GameRenderer ({
     ratio,
     height,
-    resolution = 1,
-    
     scene,
-    onLoop = ()=>{},
     play,
+    resolution = 1,
+    onLoop = () => {},
+    onRenderer = () => {},
     style = {},
 }) {
     const canvasRef = useRef(null);
@@ -36,6 +36,7 @@ export default function GameRenderer ({
             height: canvas_height,
         });
         rendererRef.current = renderer;
+        onRenderer(rendererRef.current);
         
         // Renderer loop
         const ticker = new Ticker();
@@ -49,17 +50,19 @@ export default function GameRenderer ({
     //
     // Loop for rendering
     //
-    useEffect(() => {
-        if (play) tickerRef.current.play();
+    useEffect(() => { 
+        if (play) tickerRef.current.start();
         else tickerRef.current.stop();
     }, [play])
     
     
     return (
-        <canvas 
-            ref={canvasRef}
-            className="game-view"
-            style={style}
-        />
+        <div className="game-container">
+            <canvas 
+                className="game-view"
+                ref={canvasRef}
+                style={style}
+            />
+        </div>
     )
 }
