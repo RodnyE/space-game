@@ -16,11 +16,11 @@ const UserModel = (DataTypes) => {
         },
         pos: {
             type: DataTypes.JSON,
-            defaultValue: {}
+            defaultValue: {x: 300 , y: 300}
         },
         space_pos: {
             type: DataTypes.JSON,
-            defaultValue: {}
+            defaultValue: {x: -1 , y: -1}
         }
     };
 };

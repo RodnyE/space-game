@@ -1,5 +1,5 @@
 module.exports = {
-    w: (io) => {
+    g: (io) => {
         io.Broadcast = (event, message) => {
             io.emit(event, message);
         }

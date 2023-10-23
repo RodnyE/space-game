@@ -119,6 +119,8 @@ const generateOnBlackHole = async (id) => {
 const generateSpace = async (x, y) => {
     let total = x * y , progress = 0;
     const st = new Date().getTime();
+    const _s = await spaceZone("Solar System", -1 , -1, "sun");
+    const _p = await planet("Earth", _s.id, 300, 300, 32, 78);
     for (let _y = 0; _y < y; _y++) {
         for (let _x = 0; _x < x; _x++) {
             createLoadingBar(total , progress++);

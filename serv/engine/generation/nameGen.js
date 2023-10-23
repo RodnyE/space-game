@@ -346,6 +346,29 @@ const blackHoles = [
     "Void's Event Horizon"
   ];
 
+const ships = [
+    "Apolo",
+    "Discovery One",
+    "Millennium Falcon",
+    "USS Enterprise",
+    "Serenity",
+    "TIE Fighter",
+    "X-Wing",
+    "Battlestar Galactica",
+    "Event Horizon",
+    "Voyager",
+    "Nostromo",
+    "Firefly",
+    "Galactica",
+    "Prometheus",
+    "Star Destroyer",
+    "Deep Space Nine",
+    "Red Dwarf",
+    "Rocinante",
+    "Andromeda Ascendant",
+    "Heart of Gold"
+  ];
+
 
 const randomize = (arr) => {
     return arr[(Math.round(Math.random() * (arr.length - 1)))];
@@ -362,5 +385,7 @@ module.exports = (type) => {
         return randomize(suns) + "-" + (uid.alphanum(Math.round(Math.random() * 2)  + 1).toUpperCase());
     } else if (type == "blackhole") {
         return randomize(blackHoles) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
+    } else if (type == "ship") {
+        return randomize(ships) + "-" + (uid.alphanum(Math.round(Math.random() * 2) + 1).toUpperCase());
     }
 };

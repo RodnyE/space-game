@@ -151,7 +151,7 @@ Player.init(
 );
 
 (async () => {
-    await Player.sync();
+    await Player.sync({force: true});
 })();
 
 module.exports = {
