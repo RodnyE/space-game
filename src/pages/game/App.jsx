@@ -6,26 +6,32 @@ import JoystickCtrl from "./controls/JoystickCtrl"
 import Fullscreen from "ui/Fullscreen"
 import GameRenderer from "ui/GameRenderer"
 
-import { gx, createScene } from "engine/scene"
+import { gx, initGameScene } from "engine/scene"
 import Container from "gl/Container"
 import loopHandler from "engine/loop"
 
 // Application 
 export default function App () {
     const [fullscreen, setFullscreen] = useState(false);
-    const [scene, setScene] = useState(new Container());
     const [play, setPlay] = useState(null);
+    const [scene, setScene] = useState(null);
     
-    // Mount GameRenderer
-    const rendererHandler = (renderer) => {
-        if (renderer) {
-            gx.renderer = renderer;
-            gx.joy = {x: 0, y: 0, s: 0}
-            setScene(createScene());
+    /**
+     * Event handler to ready GameRenderer
+     * @param {PIXI.Renderer} renderer
+     */
+    const readyHandler = (renderer) => {
+        initGameScene({
+            width: renderer.width,
+            height: renderer.height,
+        })
+        .then((scene) => {
+            setScene(scene);
             setPlay(true);
-        }
+        })
     };
     
+    // Render
     return (<div>
         {!fullscreen &&
             <Button onClick={() => setFullscreen(true)}> Start </Button> 
@@ -42,7 +48,7 @@ export default function App () {
                     ratio={3/2}
                     play={play}
                     onLoop={loopHandler}
-                    onRenderer={rendererHandler}
+                    onReady={readyHandler}
                 />  
                 <JoystickCtrl 
                     style={{
