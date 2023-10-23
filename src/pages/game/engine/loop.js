@@ -25,7 +25,12 @@ export default function loop () {
     player.y += player.vy;
     camera.x += (player.x - camera.x) * 0.03;
     camera.y += (player.y - camera.y) * 0.03; 
-    player.rotation += (joyRotation - player.rotation) * 0.09;
+    
+    // Player rotation
+    if (joy.s) {
+        // joystick pressed !
+        player.rotation += (joyRotation - player.rotation) * 0.09;
+    }
     
     //debugText.text = player.rotation / PI + "π"
 }
