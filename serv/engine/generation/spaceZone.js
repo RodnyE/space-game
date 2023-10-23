@@ -9,6 +9,7 @@ const generate = async (name ,x, y ,type) => {
         if (sz) return sz;
         else return false;
     } catch (err) {
+        console.log(err);
         return false;
     }
 };

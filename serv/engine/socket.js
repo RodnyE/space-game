@@ -1,8 +1,13 @@
 const _Player = require("./player/player.js");
+const _Space = require("./space/space.js");
 
-const Socket = (io) => {
+
+const Socket = async (io) => {
     const sw = require("./socket-w.js").g(io);
     const g = sw.CreateNamespace("/game");
+    const Space = new _Space(g);
+    await Space.config();
+    Space.Loop(15);
     g.on("connection" , async (socket) => {
         const s = require("./socket-w.js").s(socket);
         let user_id = "xgkHNGNM";
@@ -14,6 +19,8 @@ const Socket = (io) => {
 
         const Player = new _Player(user_id , s);
         await Player.sync();
+
+        Space.addPlayer(Player);
 
     });
 }

@@ -1,6 +1,6 @@
 const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
-const { Player, SpaceZone } = require(config.HELPERS + "/db.js");
+const { Player, SpaceZone , Sun , Asteroid , Planet , BlackHole} = require(config.HELPERS + "/db.js");
 class _Player {
     constructor(id, s) {
         this.id = id;
@@ -8,6 +8,7 @@ class _Player {
         this.s = s;
         this.pos;
         this.space_pos;
+        this.enableMove;
     }
 
     async sync() {
@@ -26,12 +27,67 @@ class _Player {
         this.pos = pj.pos;
         this.space_pos = pj.space_pos;
         await this.sendData();
+        //await this.sendSpaceData();
     }
 
     async sendData() {
 
-        this.s.emit("player_data", { name: this.name, pos: this.pos })
+        await this.s.emit("player_data", { name: this.name, pos: this.pos });
     }
+
+    async sendSpaceData() {
+        const {x , y} = this.space_pos;
+        const space = await SpaceZone.findOne({
+            where: {
+                x , y
+            }
+        });
+        if(space){
+            let suns , planets , asteroids , blackholes;
+            suns = await Sun.findAll({
+                attributes: ["name" , "x" , "y"],
+                where: {
+                    spacezone_id: space.id
+                }
+            });
+            planets = await Planet.findAll({
+                attributes: ["name" , "x" , "y"],
+                where: {
+                    spacezone_id: space.id
+                }
+            });
+            asteroids = await Asteroid.findAll({
+                attributes: ["name" , "x" , "y"],
+                where: {
+                    spacezone_id: space.id
+                }
+            });
+            blackholes = await BlackHole.findAll({
+                attributes: ["name" , "x" , "y"],
+                where: {
+                    spacezone_id: space.id
+                }
+            });
+
+            this.s.emit("space_data" , {name:space.name , suns , planets ,asteroids , blackholes});
+        }
+    }
+
+    async joinSpace(x , y){
+        this.s.join(x + "_" + y);
+        this.space_pos = {x , y};
+        await this.sendSpaceData();
+        if(x != -1 && y != -1) this.enableMove();
+    }
+
+    BroadcastToRoom(event, message) {
+        this.s.to(this.space_pos.x + "_" + this.space_pos.y).emit(event, message);
+    }
+
+    setEnableMove (callback) {
+        this.enableMove = callback;
+    }
+    
 }
 
 module.exports = _Player;
