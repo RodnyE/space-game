@@ -21,6 +21,8 @@ const initGameScene = (size) => new Promise((resolve) => {
     let resources = loader.resources;
     
     loader.load(() => {
+        let music = resources.spaceSound.play();
+        
         let layer1 = new Container();
         let camera = new Camera(layer1, { 
             size: new Rectangle(0, 0, size.width, size.height),
@@ -35,6 +37,8 @@ const initGameScene = (size) => new Promise((resolve) => {
             player.speed = 1.5;
             player.vx = 0;
             player.vy = 0; 
+            player.x = worldSize / 2;
+            player.y = worldSize / 2;
             player.anchor.x = 0.5;
             player.anchor.y = 0.5;
         }
@@ -58,6 +62,7 @@ const initGameScene = (size) => new Promise((resolve) => {
         gx.layer1 = layer1;
         gx.joy = {x: 0, y: 0, s: 0};
         gx.scene = scene;
+        gx.resources = resources;
         
         resolve(scene);
     });

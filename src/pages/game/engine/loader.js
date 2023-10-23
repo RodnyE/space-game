@@ -31,6 +31,8 @@ export default function createLoader () {
         name: "spaceSound",
         cfg: {
             src: [spaceSnd],
+            loop: true,
+            volume: 2,
         }
     });
     

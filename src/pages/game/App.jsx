@@ -16,6 +16,13 @@ export default function App () {
     const [play, setPlay] = useState(null);
     const [scene, setScene] = useState(null);
     
+    useEffect(() => {
+        if (gx.resources) {
+            if (fullscreen) gx.resources.spaceSound.play();
+            else gx.resources.spaceSound.pause();
+        }
+    }, [fullscreen]);
+    
     /**
      * Event handler to ready GameRenderer
      * @param {PIXI.Renderer} renderer
