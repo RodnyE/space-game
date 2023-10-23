@@ -77,7 +77,8 @@ class _Player {
         this.s.join(x + "_" + y);
         this.space_pos = {x , y};
         await this.sendSpaceData();
-        if(x != -1 && y != -1) this.enableMove();
+        //if(x != -1 && y != -1) 
+        this.enableMove();
     }
 
     BroadcastToRoom(event, message) {

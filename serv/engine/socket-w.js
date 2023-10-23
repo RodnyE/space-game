@@ -9,13 +9,14 @@ module.exports = {
         }
 
         io.CreateNamespace = (namespace) => {
-            io = io.of("/world");
+            io = io.of(namespace);
             io.Broadcast = (event, message) => {
-                io.of(namespace).emit(event, message);
+                io.emit(event, message);
             }
             io.BroadcastToRoom = (room, event, message) => {
-                io.of(namespace).in(room).emit(event, message);
+                io.in(room).emit(event, message);
             }
+            
             return io;
         }
         return io;
