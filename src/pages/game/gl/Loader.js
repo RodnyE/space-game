@@ -1,5 +1,6 @@
 
 import { Texture } from "pixi.js"
+import AudioSprite from "gl/AudioSprite"
 
 /**
  * Loader and resources preprocessor 
@@ -39,7 +40,7 @@ class Loader {
     addSound ({name, cfg, preprocess}) {
         this.assets.push({
             name, 
-            src, 
+            cfg, 
             type: "sound",
             preprocess,
         });
@@ -57,7 +58,7 @@ class Loader {
         
         let promise = Promise.resolve();
         while (assets.length) {
-            let {name, src, preprocess, type} = assets.shift();
+            let {name, src, cfg, preprocess, type} = assets.shift();
             
             promise = promise.then(() => new Promise((resolve)=>{
                 
@@ -74,9 +75,8 @@ class Loader {
                
                 // sound asset
                 else if (type === "sound") {
-                    let sound = new SoundSprite(src);
+                    let sound = new AudioSprite(cfg);
                     sound.once("load", () => {
-                        sound.removeListener("load");
                         if (preprocess) preprocess(sound);
                         resources[name] = sound;
                         resolve();
