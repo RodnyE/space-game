@@ -32,8 +32,7 @@ class _Space {
         };
         player.setEnableMove(() => {
             player.s.on("move", (data) => {
-                console.log(data);
-                if (data.x && data.y) {
+                if (player.canMove && data.x && data.y) {
                     player.pos = data;
                     this.space[space][player.name].pos = data;
                     if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: data };
@@ -48,17 +47,31 @@ class _Space {
             ang: 180
         });
 
+        player.s.on("disconnect" , async (data) => {
+            player.leaveSpace();
+            const p = await Player.findOne({where: {user_id: player.id}});
+            if(p){
+                await p.update({
+                    pos: player.pos,
+                    space_pos: player.space_pos
+                });
+            }
+
+        });
+
     }
-    isEmptyObject(obj) {
-        return Object.values(obj).length === 0;
-    }
+    
 
     Loop(fps) {
+
+        const isEmptyObject = (obj) => {
+            return Object.values(obj).length === 0;
+        }
         //Game Loop
         setInterval(() => {
             const pj_changes = { ...this.pj_changes };
             for (let m in pj_changes) {
-                if (this.isEmptyObject(pj_changes[m])) continue;
+                if (isEmptyObject(pj_changes[m])) continue;
                 this.g.BroadcastToRoom(m, 'pj_changes', pj_changes[m]); //sending players pj_changes to area
                 this.pj_changes[m] = {}
             }

@@ -1,5 +1,6 @@
 const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
+const Maths = require(config.HELPERS + "/maths.js");
 const { Player, SpaceZone , Sun , Asteroid , Planet , BlackHole} = require(config.HELPERS + "/db.js");
 class _Player {
     constructor(id, s) {
@@ -9,6 +10,7 @@ class _Player {
         this.pos;
         this.space_pos;
         this.enableMove;
+        this.canMove = false;
     }
 
     async sync() {
@@ -79,14 +81,28 @@ class _Player {
         await this.sendSpaceData();
         //if(x != -1 && y != -1) 
         this.enableMove();
+        this.canMove = true;
+    }
+
+    leaveSpace(){
+        this.BroadcastToRoom("player_leave" , this.name);
+        this.s.leave(this.space_pos.x + "_" + this.space_pos.y);
+        this.canMove = false;
+    }
+
+    async changeSpace(pos , space_pos){
+        this.leaveSpace();
+        this.pos = pos;
+        await this.sendData();
+        await this.joinSpace(space_pos.x , space_pos.y);
     }
 
     BroadcastToRoom(event, message) {
         this.s.to(this.space_pos.x + "_" + this.space_pos.y).emit(event, message);
     }
 
-    setEnableMove (callback) {
-        this.enableMove = callback;
+    setEnableMove (call) {
+        this.enableMove = call;
     }
     
 }
