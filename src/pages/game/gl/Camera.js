@@ -16,43 +16,58 @@ class Camera {
         this.height = cfg.size.height;
         this.limits = cfg.limits;
         
-        // layer to move
+        // layer to move 
+        layer.pivot.x = this.width / 2;
+        layer.pivot.y = this.height / 2;
         this.layer = layer;
         
         // position
         this._x = 0;
         this._y = 0; 
+        this._z = 1; // zoom
     }
     
     get x () {return this._x}
     get y () {return this._y}
+    get z () {return this._z}
     
     set x (x) {
-        let middleX = this.width / 2;
-        let lx = middleX - x; // layer position
+        let z = this._z;
+        let w = this.width;
         
-        // layer limits
-        if (x < middleX) lx = 0;
-        else if (x > this.limits.width - middleX) lx = this.width - this.limits.width;
+        let limit = this.limits.width;
+        let leftLimit = w/2 + (limit - limit * z)/2;
+        let rightLimit = (limit * z) - w/2;
+        
+        if (x < leftLimit) x = leftLimit;
+        else if (x > rightLimit) x = rightLimit;
         
         // update 
         this._x = x;
-        this.layer.x = lx; 
+        this.layer.x = - x + w; 
     }
     
     set y (y) {
-        let middleY = this.height / 2;
-        let ly = middleY - y; // layer position
+        let z = this._z;
+        let h = this.height;
         
-        // layer limits
-        if (y < middleY) ly = 0;
-        else if (y > this.limits.height - middleY) ly = this.height - this.limits.height;
+        let limit = this.limits.height;
+        let upLimit = h/2 + (limit - limit*z)/2;
+        let downLimit = (limit * z) - h/2;
+        
+        if (y < upLimit) y = upLimit;
+        else if (y > downLimit) y = downLimit;
         
         // update 
         this._y = y;
-        this.layer.y = ly; 
+        this.layer.y = - y + h; 
     }
     
+    set z (z) {
+        this.layer.scale.x = z;
+        this.layer.scale.y = z;
+        this._z = z;
+    }
 }
 
 export default Camera;
