@@ -32,7 +32,7 @@ module.exports = {
     // main export file
     output: {
         path: cfg.DIST,
-        filename: "public/[name].js",
+        filename: "[name].js",
     }, 
     
     // html export
@@ -41,7 +41,7 @@ module.exports = {
           (page) =>
             new HtmlWebpackPlugin({
               template: "./public/index.html",
-              publicPath: "/",
+              publicPath: "/p",
               filename: `${page}.html`,
               chunks: [page],
             })

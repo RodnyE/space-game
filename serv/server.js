@@ -10,6 +10,7 @@ const router = require("./routes/router.js");
 const { User } = require("./helpers/db.js");
 var SQLiteStore = require('connect-sqlite3')(sessions);
 
+require("./install.js");
 //Google Middleware
 require("./middlewares/google.js");
 //Facebook Middleware
@@ -106,7 +107,7 @@ if (!config.isProduction) {
 }
 else {
     // Production mode - Use static server for serving static files
-    app.use("/public", express.static(config.DIST + "/public"));
+    app.use("/p", express.static(config.DIST));
 
     for (let page of config.pages) {
         app.get(`/${page}`, (req, res) => res.sendFile(config.DIST + "/" + page + ".html"));

@@ -1,7 +1,8 @@
 const fs = require("fs");
 
-let x = process.argv[2];
-let y = process.argv[3];
+let x = process.argv[2] || 10;
+let y = process.argv[3] || 10;
+
 function isN(value) {
     value = value - 0;
     return Number.isInteger(value) && value >= 1;
