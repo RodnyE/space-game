@@ -7,7 +7,7 @@ EndColor='\033[0m'
 # compile 
 echo -e "\n${BCyan}Compiling...${EndColor}\n"
 npm run build
-git add dist
+git add dist -f
 
 # create new database
 echo -e "\n${BCyan}Creating database...${EndColor}\n"
