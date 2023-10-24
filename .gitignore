@@ -1,5 +1,6 @@
 node_modules/
 sessions
+dist
 database/db.sqlite
 **/*.LICENSE.txt
 .vscode/
