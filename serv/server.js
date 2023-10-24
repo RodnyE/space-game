@@ -10,7 +10,6 @@ const router = require("./routes/router.js");
 const { User } = require("./helpers/db.js");
 var SQLiteStore = require('connect-sqlite3')(sessions);
 
-require("./install.js");
 //Google Middleware
 require("./middlewares/google.js");
 //Facebook Middleware

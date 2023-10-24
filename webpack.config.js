@@ -19,6 +19,7 @@ module.exports = {
     // When start a dev server
     devServer: {
         contentBase: cfg.DIST,
+        publicPath: "/p",
         port: cfg.PORT,
         host: "localhost",
     },

@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-let x = process.argv[2] || 10;
-let y = process.argv[3] || 10;
+let x = process.argv[2];
+let y = process.argv[3];
 
 function isN(value) {
     value = value - 0;
