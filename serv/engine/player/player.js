@@ -47,25 +47,25 @@ class _Player {
         if(space){
             let suns , planets , asteroids , blackholes;
             suns = await Sun.findAll({
-                attributes: ["name" , "x" , "y"],
+                attributes: ["name" , "x" , "y","temperature" , "diameter"],
                 where: {
                     spacezone_id: space.id
                 }
             });
             planets = await Planet.findAll({
-                attributes: ["name" , "x" , "y"],
+                attributes: ["name" , "x" , "y","temperature" , "diameter" ],
                 where: {
                     spacezone_id: space.id
                 }
             });
             asteroids = await Asteroid.findAll({
-                attributes: ["name" , "x" , "y"],
+                attributes: ["name" , "x" , "y", "temperature" ,"diameter"],
                 where: {
                     spacezone_id: space.id
                 }
             });
             blackholes = await BlackHole.findAll({
-                attributes: ["name" , "x" , "y"],
+                attributes: ["name" , "x" , "y" , "temperature" , "diameter"],
                 where: {
                     spacezone_id: space.id
                 }

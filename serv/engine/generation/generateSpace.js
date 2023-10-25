@@ -125,8 +125,16 @@ const generateSpace = async (x, y) => {
     const st = new Date().getTime();
     createLoadingBar(total , progress++);
     await delay();
-    const _s = await spaceZone("SolarSystem", -1 , -1, "sun");
-    const _p = await planet("Earth", _s.id, 300, 300, 32, 78);
+    const _ss = await spaceZone("SolarSystem", -1 , -1, "sun");
+    await sun("Sun", _ss.id , 500, 500, 5500 , 175);
+    await planet("Mercury", _ss.id, 400, 600, 32, 50);
+    await planet("Venus", _ss.id, 650, 600, 32, 75);
+    await planet("Earth", _ss.id, 300, 300, 32, 78);
+    await planet("Mars", _ss.id, 255, 270, 32, 50);
+    await planet("Jupiter", _ss.id, 275, 750, 32, 145);
+    await planet("Saturn", _ss.id, 675, 185, 32, 150);
+    await planet("Uranus", _ss.id, 100, 125, 32, 110);
+    await planet("Neptune", _ss.id, 850, 900, 32, 100);
     for (let _y = 0; _y < y; _y++) {
         for (let _x = 0; _x < x; _x++) {
             createLoadingBar(total , progress++);
