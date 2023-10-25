@@ -43,13 +43,26 @@ export default class GameContext {
             space.width = size.width;
             space.height = size.height;
             layer1.addChild(space); 
-        this.spaceEntity = space;
+        this.spaceEntity = space; 
         
-        // player
+        // Minimap
+        let map = new Graphics();
+        let mapWidth = 200;
+            map.mapWidth = mapWidth;
+            map.k = mapWidth / size.width;
+            map.x = canvas.width - mapWidth;
+            map.y = 0;
+            map.beginFill(0xaaaaaa);
+            map.drawRect(0, 0, mapWidth, mapWidth * size.height / size.width);
+            scene.addChild(map);
+        this.minimap = map;
+        
+        // Player
         let player = new Player(resources.ship);
         player.zIndex = 5;
         layer1.addChild(player); 
         this.player = player;
+       
         
         // context
         this.resources = resources;
@@ -87,6 +100,11 @@ export default class GameContext {
         this.planets[name] = planet;
         this.layer1.addChild(planet);
         this.layer1.sortChildren();
+        
+        // draw in minimap
+        let minimap = this.minimap;
+        minimap.beginFill(0x0000ff);
+        minimap.drawCircle(x * minimap.k, y * minimap.k, radio * minimap.k)
         
         return planet;
     }

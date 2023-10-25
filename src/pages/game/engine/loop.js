@@ -27,13 +27,9 @@ function loop (gx) {
     camera.x += (player.x - camera.x) * 0.03;
     camera.y += (player.y - camera.y) * 0.03; 
     
-    // Zoom ease
-    if (vx || vy) {
-        camera.z += (0.89 - camera.z) * 0.01;
-    }
-    else {
-        camera.z += (1 - camera.z) * 0.01;
-    }
+    // Draw player path in Minimap
+    minimap.beginFill(0xff0000);
+    minimap.drawRect(player.x * minimap.k, player.y * minimap.k, 2, 2);
     
     // Player rotation
     if (joy.s) {
