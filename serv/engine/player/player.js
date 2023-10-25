@@ -75,10 +75,15 @@ class _Player {
         }
     }
 
-    async joinSpace(x , y){
+    sendPlayersData(space){
+        this.s.emit("players_data" , space[this.space_pos.x + "_" + this.space_pos.y]);
+    }
+
+    async joinSpace(x , y , space){
         this.s.join(x + "_" + y);
         this.space_pos = {x , y};
         await this.sendSpaceData();
+        this.sendPlayersData(space);
         //if(x != -1 && y != -1) 
         this.enableMove();
         this.canMove = true;

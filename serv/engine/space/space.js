@@ -40,7 +40,7 @@ class _Space {
                 }
             });
         });
-        await player.joinSpace(space_pos.x, space_pos.y);
+        await player.joinSpace(space_pos.x, space_pos.y , this.space);
         player.BroadcastToRoom("player_join", {
             name: player.name,
             pos: player.pos,
@@ -56,6 +56,7 @@ class _Space {
                     space_pos: player.space_pos
                 });
             }
+            delete this.players[player.id];
 
         });
 
