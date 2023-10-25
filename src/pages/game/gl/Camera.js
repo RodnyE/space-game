@@ -64,9 +64,10 @@ class Camera {
     }
     
     set z (z) {
-        this.layer.scale.x = z;
-        this.layer.scale.y = z;
-        this._z = z;
+      // @TODO fix z scale
+      // this.layer.scale.x = z;
+      // this.layer.scale.y = z;
+      // this._z = z;
     }
 }
 
