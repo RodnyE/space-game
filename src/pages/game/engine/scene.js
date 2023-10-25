@@ -1,76 +1,50 @@
 
 import { groupD8, Text, Rectangle } from "pixi.js"
-import Loader from "gl/Loader"
-import Camera from "gl/Camera"
-import Entity from "gl/Entity"
-import Container from "gl/Container"
-import createLoader from "engine/loader"
+import GameContext from "../game/GameContext"
 
-const worldSize = 1500;
-const gx = {}; // game context
+import createLoader from "engine/loader"
+import loop from "engine/loop"
+
+let gx;
+
+/**
+ * Get current game context 
+ * 
+ * @return {GameContext} 
+ */
+export const getGameContext = () => gx;
+
 
 /**
  * Init context and game scene
  * 
- * @param {PIXI.Rectangle} size - scene dimensions
+ * @param {PIXI.Rectangle} canvas - game view dimensions
  * @return {Promise} - resolve when scene is loaded
  */
-const initGameScene = (size) => new Promise((resolve) => {
-    let scene = new Container();
+export const initGameContext = (canvas) => new Promise((resolve) => {
+    
     let loader = createLoader();
     let resources = loader.resources;
     
-    loader.load(() => {
-        let music = resources.spaceSound.play();
+    // Resources ready!
+    loader.load().then((resources) => {
         
-        let layer1 = new Container();
-        let camera = new Camera(layer1, { 
-            size: new Rectangle(0, 0, size.width, size.height),
-            limits: new Rectangle(0, 0, worldSize, worldSize),
-        });
-        let debugText = new Text("");
+        // Create game context
+        gx = new GameContext({
+            resources,
+            canvas,
+            size: new Rectangle(0,0, 900, 900),
+        })
         
-        let player = new Entity(resources.ship);
-        {
-            player.width = 90;
-            player.height = 90;
-            player.speed = 1.5;
-            player.vx = 0;
-            player.vy = 0; 
-            player.x = worldSize / 2;
-            player.y = worldSize / 2;
-            player.anchor.x = 0.5;
-            player.anchor.y = 0.5;
-        }
+        // Play background music
+        resources.spaceSound.play();
         
-        let space = new Entity(resources.space);
-        {
-            space.width = worldSize;
-            space.height = worldSize;
-        }
-       
-        layer1.addChild(space);
-        layer1.addChild(player);
-        scene.addChild(layer1);
-        scene.addChild(debugText);
+        // 
+        gx.loop = () => loop(gx);
+        gx.joy = {x:0, y:0, s:0};
         
-        // show in context
-        gx.space = space;
-        gx.player = player;
-        gx.camera = camera;
-        gx.debugText = debugText;
-        gx.layer1 = layer1;
-        gx.joy = {x: 0, y: 0, s: 0};
-        gx.scene = scene;
-        gx.resources = resources;
-        
-        resolve(scene);
+        // end scene load
+        resolve(gx);
     });
     
 });
-
-
-export {
-    gx,
-    initGameScene,
-}

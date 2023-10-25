@@ -1,17 +1,17 @@
 
-import { gx } from "engine/scene";
-
 const PI = Math.PI;
 
-export default function loop () {
+/**
+ * Frame loop for a Game instance
+ * 
+ * @param {GameContext} gx - game context
+ */
+function loop (gx) {
     const {
         player,
         camera,
         joy,
-        debugText,
     } = gx;
-    
-    if (!gx.scene) return;
     
     let joyRotation = Math.atan2(joy.y, joy.x);// + PI;
     
@@ -42,3 +42,5 @@ export default function loop () {
     
     //debugText.text = player.rotation / PI + "π"
 }
+
+export default loop;

@@ -6,34 +6,44 @@ import JoystickCtrl from "./controls/JoystickCtrl"
 import Fullscreen from "ui/Fullscreen"
 import GameRenderer from "ui/GameRenderer"
 
-import { gx, initGameScene } from "engine/scene"
-import Container from "gl/Container"
-import loopHandler from "engine/loop"
+import { getGameContext, initGameContext } from "engine/scene"
 
 // Application 
 export default function App () {
     const [fullscreen, setFullscreen] = useState(false);
     const [play, setPlay] = useState(null);
-    const [scene, setScene] = useState(null);
+    const [gx, setGX] = useState({});
+    
+    let _gx = gx;
     
     useEffect(() => {
-        if (gx.resources) {
-            if (fullscreen) gx.resources.spaceSound.play();
-            else gx.resources.spaceSound.pause();
+        if (gx && gx.music) {
+            if (fullscreen) gx.music.play();
+            else gx.music.pause();
         }
     }, [fullscreen]);
+    
+    /**
+     * Event handler on joystick
+     */
+    const moveJoystickHandler = (joy) => {
+        gx.joy = joy;
+    }
     
     /**
      * Event handler to ready GameRenderer
      * @param {PIXI.Renderer} renderer
      */
     const readyHandler = (renderer) => {
-        initGameScene({
+        if(getGameContext()) return;
+        
+        initGameContext({
             width: renderer.width,
             height: renderer.height,
         })
-        .then((scene) => {
-            setScene(scene);
+        .then((gx) => {
+            _gx = gx;
+            setGX(gx);
             setPlay(true);
         })
     };
@@ -50,11 +60,11 @@ export default function App () {
                 onFullscreen={(full) => setFullscreen(full)}
             >
                 <GameRenderer 
-                    scene={scene} 
+                    scene={gx.scene} 
                     height={500}
                     ratio={3/2}
                     play={play}
-                    onLoop={loopHandler}
+                    onLoop={gx.loop}
                     onReady={readyHandler}
                 />  
                 <JoystickCtrl 
@@ -63,7 +73,7 @@ export default function App () {
                         bottom: "1rem",
                         left: "1rem"
                     }}
-                    onMove={(joy) => {gx.joy = joy}}
+                    onMove={(joy) => {_gx.joy = joy}}
                 />
             </Fullscreen>
         }

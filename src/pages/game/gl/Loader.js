@@ -50,9 +50,9 @@ class Loader {
     /**
      * Start load all assets
      * 
-     * @param {function} callback - assets ready
+     * @return {Promise} resolve when loaded
      */
-    load (callback) {
+    load () {
         const assets = this.assets;
         const resources = this.resources;
         
@@ -86,8 +86,7 @@ class Loader {
             
         }
         
-        promise.then(() => callback());
-        return this;
+        return promise.then(() => Promise.resolve(resources));
     }
 }
 
