@@ -4,6 +4,7 @@ import Loader from "gl/Loader"
 
 // images
 import shipImg from "assets/ship.png"
+import earthImg from "assets/earth.png"
 import spaceImg from "assets/outer-space.png"
 
 // sound
@@ -19,6 +20,10 @@ export default function createLoader () {
     loader.add({
         name: "space", 
         src: spaceImg,
+    }) 
+    loader.add({
+        name: "earth", 
+        src: earthImg,
     }) 
     loader.add({
         name: "ship", 
