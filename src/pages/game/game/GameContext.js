@@ -27,9 +27,13 @@ export default class GameContext {
         
         // game container
         let layer1 = new Container();
-            layer1.sortableChildren = true;
-            scene.addChild(layer1);
+        let layer2 = new Container();
+        
+        layer1.sortableChildren = true;
+        scene.addChild(layer2);
+        scene.addChild(layer1);
         this.layer1 = layer1;
+        this.layer2 = layer2;
         
         // 
         let camera = new Camera(layer1, { 
@@ -40,9 +44,9 @@ export default class GameContext {
         
         // background environment 
         let space = new Entity(resources.space);
-            space.width = size.width;
-            space.height = size.height;
-            layer1.addChild(space); 
+            space.width = canvas.width * 2;
+            space.height = canvas.height * 2;
+            layer2.addChild(space); 
         this.spaceEntity = space; 
         
         // Minimap
@@ -68,6 +72,7 @@ export default class GameContext {
         this.resources = resources;
         this.planets = {};
         
+        window.gx = this;
     }
     
     /**

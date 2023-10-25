@@ -1,5 +1,5 @@
 
 // Tile to Pixels
 export const t2x = (tile) => {
-    return tile * 50;
+    return tile * 10;
 }
