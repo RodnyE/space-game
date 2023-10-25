@@ -1,7 +1,7 @@
 
 # Space Game 👨‍🚀 
 
-🚀🔥 You can play [here](http://spaceship.eu-4.evennode.com/auth)  
+🚀🔥 You can play [here](https://acortar.link/wWWosb)  
 
 Space ship war game and space colonization. It is currently in the development phase.
 
