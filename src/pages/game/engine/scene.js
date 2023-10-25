@@ -4,6 +4,8 @@ import GameContext from "../game/GameContext"
 
 import createLoader from "engine/loader"
 import loop from "engine/loop"
+import { t2x } from "utils/scale"
+import { initSocket, getSocket } from "../socket/socket"
 
 let gx;
 
@@ -27,13 +29,14 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
     let resources = loader.resources;
     
     // Resources ready!
-    loader.load().then((resources) => {
+    loader.load()
+    .then(() => {
         
         // Create game context
         gx = new GameContext({
             resources,
             canvas,
-            size: new Rectangle(0,0, 900, 900),
+            size: new Rectangle(0,0, t2x(1000), t2x(1000)),
         })
         
         // Play background music
@@ -42,6 +45,9 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
         // 
         gx.loop = () => loop(gx);
         gx.joy = {x:0, y:0, s:0};
+        
+        // Connect to server
+        initSocket();
         
         // end scene load
         resolve(gx);

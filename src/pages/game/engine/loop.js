@@ -11,6 +11,7 @@ function loop (gx) {
         player,
         camera,
         joy,
+        minimap,
     } = gx;
     
     let joyRotation = Math.atan2(joy.y, joy.x);// + PI;
