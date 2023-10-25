@@ -59,13 +59,13 @@ class _Player {
                 }
             });
             asteroids = await Asteroid.findAll({
-                attributes: ["name" , "x" , "y", "temperature" ,"diameter"],
+                attributes: ["name" , "x" , "y" ,"diameter"],
                 where: {
                     spacezone_id: space.id
                 }
             });
             blackholes = await BlackHole.findAll({
-                attributes: ["name" , "x" , "y" , "temperature" , "diameter"],
+                attributes: ["name" , "x" , "y"  , "diameter"],
                 where: {
                     spacezone_id: space.id
                 }
