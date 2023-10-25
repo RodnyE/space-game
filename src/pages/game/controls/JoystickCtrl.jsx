@@ -21,7 +21,7 @@ export default function JoystickCtrl({
         const ctx = canvas.getContext("2d");
         ctx.fillStyle = "#ffffff";
         ctx.strokeStyle = "#ffffff";
-        console.log([offsetParent])
+        
         // Relative percentage position (-1 to 1)
         let x = 0; 
         let y = 0;
@@ -134,6 +134,16 @@ export default function JoystickCtrl({
 
         // Initial draw
         draw();
+        
+        // Unmount component
+        return () => { 
+            canvas.removeEventListener("touchstart", startHandler);
+            canvas.removeEventListener("touchmove", moveHandler);
+            canvas.removeEventListener("touchend", endHandler);
+            canvas.removeEventListener("mousedown", startHandler);
+            canvas.removeEventListener("mousemove", moveHandler);
+            canvas.removeEventListener("mouseup", endHandler); 
+        }
     }, []);
 
     return (
