@@ -5,7 +5,7 @@
     "test": "NODE_ENV=development node serv/server.js",
     "inst": "node serv/install.js",
     "uninst": "node serv/uninstall.js",
-    "build": "rm -r dist || webpack --mode=production --node-env=production"
+    "build": "rm -r dist ; webpack --mode=production --node-env=production"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

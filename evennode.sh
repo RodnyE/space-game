@@ -15,16 +15,16 @@ npm run inst 5 5
 git add database -f
 
 # clear unnecessary files
-git rm --cached src 
-git rm --cached public
+git rm --cached -r src 
+git rm --cached -r public
 
 # push
 git commit -m "[[update evennode]]"
-echo -e "\n${BCyan}Uploading to evennode...${EndColor}\n"
-git push evennode main -f
+echo -e "\n${BCyan}Uploading to evennode...${EndColor}\n" 
+git push -f evennode main
 
 # restore
 git reset --soft HEAD~1
-git restore --staged database src public 
+git restore --staged dist database src public 
 
 echo -e "\n${BCyan}Success !!${EndColor}\n"
