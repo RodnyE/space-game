@@ -2,10 +2,12 @@
 import Camera from "gl/Camera"
 import Container from "gl/Container"
 
-import { Rectangle, Graphics } from "pixi.js"
+import { Rectangle, Matrix, Graphics, Color } from "pixi.js"
 import Entity from "gl/Entity"
 import Player from "./Player"
 import Planet from "./Planet"
+
+import { randomColor } from "utils/random"
 
 /**
  * Game 
@@ -52,11 +54,17 @@ export default class GameContext {
         // Minimap
         let map = new Graphics();
         let mapWidth = 200;
+            map.k = mapWidth / size.width; // proportion factor
             map.mapWidth = mapWidth;
-            map.k = mapWidth / size.width;
             map.x = canvas.width - mapWidth;
             map.y = 0;
-            map.beginFill(0xaaaaaa);
+            map.beginTextureFill({
+                texture: resources.space,
+                matrix: new Matrix(
+                    mapWidth / resources.space.width,  0, 0, 
+                    mapWidth / resources.space.height, 0, 0,
+                ),
+            });
             map.drawRect(0, 0, mapWidth, mapWidth * size.height / size.width);
             scene.addChild(map);
         this.minimap = map;
@@ -66,11 +74,11 @@ export default class GameContext {
         player.zIndex = 5;
         layer1.addChild(player); 
         this.player = player;
-       
         
         // context
         this.resources = resources;
         this.planets = {};
+        this.suns = {};
         
         window.gx = this;
     }
@@ -88,15 +96,15 @@ export default class GameContext {
     /**
      * Add planets
      */
-    setPlanet ({name, radio, x, y}) {
+    setPlanet ({name, temperature, radius, x, y}) {
+        let color = randomColor();
         let planet = new Planet({
             name,
-            radio,
-            color: 0x0000ff,
-            texture: this.resources.earth
+            radius,
+            temperature,
+            color,
         });
         
-        planet.zIndex = 2;
         if (x || y) {
             planet.x = x;
             planet.y = y;
@@ -108,9 +116,47 @@ export default class GameContext {
         
         // draw in minimap
         let minimap = this.minimap;
-        minimap.beginFill(0x0000ff);
-        minimap.drawCircle(x * minimap.k, y * minimap.k, radio * minimap.k)
+        minimap.beginFill(0x000088);
+        minimap.drawCircle(
+            (x - radius) * minimap.k, 
+            (y - radius) * minimap.k, 
+            radius * minimap.k
+        );
         
         return planet;
+    }
+    
+    /**
+     * Add sun
+     */
+    setSun({name, temperature, radius, x, y}) {
+        let color = new Color("yellow");
+        let sun = new Planet({
+            name,
+            radius,
+            temperature,
+            color,
+        });
+        sun.beginFill(color);
+        sun.drawCircle(0, 0, radius);
+        
+        // position
+        sun.x = x;
+        sun.y = y;
+        
+        // draw in minimap
+        let minimap = this.minimap;
+        minimap.beginFill(color);
+        minimap.drawCircle(
+            (x - radius) * minimap.k, 
+            (y - radius) * minimap.k, 
+            radius * minimap.k
+        );
+        
+        this.suns[name] = sun;
+        this.layer1.addChild(sun);
+        this.layer1.sortChildren();
+        
+        return sun;
     }
 }
