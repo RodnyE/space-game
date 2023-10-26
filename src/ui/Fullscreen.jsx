@@ -4,10 +4,12 @@ import {useState, useRef, useEffect} from "react"
  * FullScreen API handler component 
  * 
  * @param {boolean} fullscreen - enable and disable fullscreen 
+ * @param {boolean} global- enable use fullscreen api in all website
  * @param {function} onFullscreen
  */
 export default function FullScreen ({
     fullscreen,
+    global,
     onFullscreen,
     children
 }) {
@@ -53,7 +55,7 @@ export default function FullScreen ({
     // Prop fullscreen change
     //
     useEffect(() => {
-        const element = elementRef.current;
+        const element = !global ? elementRef.current : document.documentElement;
         const requestFullscreen = 
             element.requestFullscreen ||
             element.mozRequestFullScreen ||
