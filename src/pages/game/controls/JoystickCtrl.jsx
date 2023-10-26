@@ -143,6 +143,8 @@ export default function JoystickCtrl({
             canvas.removeEventListener("mousedown", startHandler);
             canvas.removeEventListener("mousemove", moveHandler);
             canvas.removeEventListener("mouseup", endHandler); 
+            
+            onMove = null;
         }
     }, []);
 

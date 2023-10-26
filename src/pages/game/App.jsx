@@ -56,6 +56,7 @@ export default function App () {
         
         {fullscreen && 
             <Fullscreen 
+                global={true}
                 fullscreen={fullscreen} 
                 onFullscreen={(full) => setFullscreen(full)}
             >

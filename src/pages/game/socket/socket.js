@@ -26,7 +26,17 @@ export const initSocket = () => {
                 name: planet.name,
                 x: t2x(planet.x),
                 y: t2x(planet.y),
-                radio: t2x(planet.diameter/2)
+                radius: t2x(planet.diameter/2),
+            })
+        });
+        
+        data.suns.forEach((sun) => {
+            gx.setSun({
+                name: sun.name,
+                x: t2x(sun.x),
+                y: t2x(sun.y),
+                radius: t2x(sun.diameter/2),
+                temperature: sun.temperature,
             })
         });
     });
