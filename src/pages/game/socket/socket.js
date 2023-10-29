@@ -10,8 +10,11 @@ let socket;
  */
 export const initSocket = () => {
     // Connect to the Socket.IO server
-    socket = io("/game");
+    socket = io("/", {
+        withCredentials: true
+      });
     
+
     // Connect
     socket.on("connect", (data) => {
         console.log("Connected !");

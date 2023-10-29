@@ -20,6 +20,8 @@ app.use(express.json());
 // Session Store
 const sessionMiddleware = sessions({
     store: new SQLiteStore,
+    resave: true,
+    saveUninitialized: false,
     secret: 'SECRET_cOOKIE',
     cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 1 week
 })
@@ -59,7 +61,8 @@ const io = require("socket.io")(server, {
         origin: "*",
         method: ["POST", "GET"]
     }
-}).use(function (socket, next) {
+})
+io.use(function (socket, next) {
     // Wrap the express middleware
     sessionMiddleware(socket.request, {}, next);
 });
