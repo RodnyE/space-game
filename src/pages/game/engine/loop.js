@@ -1,5 +1,10 @@
 
+import { getSocket } from "../socket/socket"
+import { t2x, x2t } from "utils/scale"
+
 const PI = Math.PI;
+let loopStep = 0;
+
 
 /**
  * Frame loop for a Game instance
@@ -10,6 +15,7 @@ function loop (gx) {
     const {
         layer1,
         player,
+        players,
         camera,
         spaceEntity,
         joy,
@@ -24,10 +30,23 @@ function loop (gx) {
     player.vx += (vx - player.vx) * 0.01;
     player.vy += (vy - player.vy) * 0.01; 
     
-    player.x += player.vx;
-    player.y += player.vy;
+    for (let pj_name in players) {
+        let pj = players[pj_name];
+        pj.x += pj.vx;
+        pj.y += pj.vy; 
+    }
+    
     camera.x += (player.x - camera.x) * 0.1;
     camera.y += (player.y - camera.y) * 0.1; 
+    
+    if (loopStep % 5 === 0 && getSocket()) {
+        let socket = getSocket();
+        
+        socket.emit("move", {
+            x: x2t(player.x).toFixed(2),
+            y: x2t(player.y).toFixed(2),
+        });
+    }
     
     // The displacement of the outer space is going to be equal to:
     // + negative
@@ -47,6 +66,7 @@ function loop (gx) {
     }
     
     //debugText.text = player.rotation / PI + "π"
+    loopStep ++;
 }
 
 export default loop;

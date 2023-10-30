@@ -22,6 +22,14 @@ export default class GameContext {
         canvas,
         size,
     }) {
+        // context
+        this.resources = resources;
+        this.players = {};
+        this.planets = {};
+        this.suns = {};
+        
+        window.gx = this;
+        
         
         // create game interface
         let scene = new Container();
@@ -70,17 +78,15 @@ export default class GameContext {
         this.minimap = map;
         
         // Player
-        let player = new Player(resources.ship);
-        player.zIndex = 5;
-        layer1.addChild(player); 
+        let player = this.setPlayer({
+            name: "current",
+            texture: resources.ship,
+            x: 0,
+            y: 0,
+        });
         this.player = player;
         
-        // context
-        this.resources = resources;
-        this.planets = {};
-        this.suns = {};
         
-        window.gx = this;
     }
     
     /**
@@ -158,5 +164,21 @@ export default class GameContext {
         this.layer1.sortChildren();
         
         return sun;
+    }
+    
+    /** 
+     * Set player
+     */
+    setPlayer({name, texture, x, y}) {
+        let player = new Player(texture);
+        
+        player.playerName = name;
+        player.zIndex = 5; 
+        player.x = x;
+        player.y = y;
+        this.layer1.addChild(player); 
+        this.players[name] = player;
+        
+        return player;
     }
 }
