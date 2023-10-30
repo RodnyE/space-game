@@ -1,7 +1,7 @@
 
 import io from "socket.io-client";
 import { getGameContext } from "engine/gx"
-import { t2x } from "utils/scale"
+import { t2x, a2r } from "utils/scale"
 
 let socket;
 
@@ -69,14 +69,17 @@ export const initSocket = () => {
         let gx = getGameContext();
         
         for (let pj_name in playersData) {
+            
+            // ignore if is user
             if (pj_name === gx.player.playerName) continue;
             let pj = playersData[pj_name];
             
             gx.setPlayer({
                 name: pj_name,
-                texture: gx.resources.ship,
+                texture: gx.resources.ship, // temporary texture
                 x: t2x(pj.pos.x),
                 y: t2x(pj.pos.y),
+                rotation: 0,
             });
         }
     });
@@ -89,13 +92,13 @@ export const initSocket = () => {
         
         // player already exist
         if (gx.players[data.name]) return;
-        
-        // add player 
+         
         gx.setPlayer({
             name: data.name,
             texture: gx.resources.ship,
             x: t2x(data.pos.x),
             y: t2x(data.pos.y),
+            rotation: 0,
         });
     });
     
@@ -118,13 +121,17 @@ export const initSocket = () => {
         let gx = getGameContext(); 
         
         for (let pj_name in playersData) {
+            
+            // ignore if is user
             if (pj_name === gx.player.playerName) continue;
             
             let data = playersData[pj_name];
             let pj = gx.players[pj_name];
             
-            if (data.pos.x) pj.x = t2x(data.pos.x);
-            if (data.pos.y) pj.y = t2x(data.pos.y);
+            if (data.pos.x) pj.targetX = t2x(data.pos.x);
+            if (data.pos.y) pj.targetY = t2x(data.pos.y);
+            if (data.a) pj.targetRotation = a2r(data.a);
+            
         } 
     });
     

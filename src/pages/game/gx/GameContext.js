@@ -89,6 +89,7 @@ export default class GameContext {
             texture: resources.ship,
             x: 0,
             y: 0,
+            rotation: 0,
         });
         this.player = player;
         
@@ -175,13 +176,20 @@ export default class GameContext {
     /** 
      * Set player
      */
-    setPlayer({name, texture, x, y}) {
+    setPlayer({name, texture, x, y, rotation}) {
         let player = new Player(texture);
         
         player.playerName = name;
         player.zIndex = 5; 
+        
         player.x = x;
         player.y = y;
+        player.rotation = rotation;
+        
+        player.targetX = x;
+        player.targetY = y;
+        player.targetRotation = rotation;
+        
         this.layer1.addChild(player); 
         this.players[name] = player;
         
