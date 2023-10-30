@@ -13,7 +13,7 @@
     width: auto;
 }
 
-@media (max-aspect-ratio: 19/10) {
+@media (max-aspect-ratio: 3/2) {
     .game-view {
         height: auto;
         width: 100%;
