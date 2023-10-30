@@ -33,17 +33,21 @@ class _Space {
         };
         player.setEnableMove(() => {
             player.On("move", (data) => {
+                space_pos = player.space_pos;
+                space = space_pos.x + "_" + space_pos.y;
                 if (player.canMove && data.x && data.y) {
-                    player.pos = data;
-                    space_pos = player.space_pos;
-                    space = space_pos.x + "_" + space_pos.y;
+                    player.pos.x = data.x;
+                    player.pos.y = data.y;
                     this.space[space][player.name].pos = data;
                     if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: data };
                     else this.pj_changes[space][player.name] = { pos: data };
                     if(data.a) {
                         player.a = data.a;
-                        this.pj_changes[space][player.name].ang = data.a;
+                        this.pj_changes[space][player.name].a = data.a;
                     }
+                }else if(player.canMove && data.a){
+                    player.a = data.a;
+                    this.pj_changes[space][player.name].a = data.a;
                 }
             });
         });
