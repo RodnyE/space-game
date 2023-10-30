@@ -40,7 +40,8 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
         })
         
         // Play background music
-        resources.spaceSound.play();
+        gx.music = resources.spaceSound;
+        gx.music.play();
         
         // 
         gx.loop = () => loop(gx);
