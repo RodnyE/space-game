@@ -35,7 +35,7 @@ class _Player {
 
     async sendData() {
 
-        await this.s.emit("player_data", { name: this.name, pos: this.pos });
+        await this.s.emit("player_data", { name: this.name, pos: this.pos ,a: this.a });
     }
 
     async sendSpaceData() {

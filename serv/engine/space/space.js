@@ -39,8 +39,8 @@ class _Space {
                     player.pos.x = data.x;
                     player.pos.y = data.y;
                     this.space[space][player.name].pos = data;
-                    if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: data };
-                    else this.pj_changes[space][player.name] = { pos: data };
+                    if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: {x : data.x , y :data.y}};
+                    else this.pj_changes[space][player.name] = { pos: {x : data.x , y :data.y}};
                     if(data.a) {
                         player.a = data.a;
                         this.pj_changes[space][player.name].a = data.a;
