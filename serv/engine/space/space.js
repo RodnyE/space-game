@@ -24,19 +24,26 @@ class _Space {
 
     async addPlayer(player) {
         this.players[player.id] = player;
-        const space_pos = player.space_pos;
-        const space = space_pos.x + "_" + space_pos.y;
+        let space_pos = player.space_pos;
+        let space = space_pos.x + "_" + space_pos.y;
+
         this.space[space][player.name] = {
             pos: player.pos,
-            ang: 180
+            a: player.a
         };
         player.setEnableMove(() => {
-            player.s.on("move", (data) => {
+            player.On("move", (data) => {
                 if (player.canMove && data.x && data.y) {
                     player.pos = data;
+                    space_pos = player.space_pos;
+                    space = space_pos.x + "_" + space_pos.y;
                     this.space[space][player.name].pos = data;
                     if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: data };
                     else this.pj_changes[space][player.name] = { pos: data };
+                    if(data.a) {
+                        player.a = data.a;
+                        this.pj_changes[space][player.name].ang = data.a;
+                    }
                 }
             });
         });
@@ -44,10 +51,10 @@ class _Space {
         player.BroadcastToRoom("player_join", {
             name: player.name,
             pos: player.pos,
-            ang: 180
+            a: player.a
         });
 
-        player.s.on("disconnect" , async (data) => {
+        player.On("disconnect" , async (data) => {
             player.leaveSpace();
             const p = await Player.findOne({where: {user_id: player.id}});
             if(p){
@@ -56,6 +63,9 @@ class _Space {
                     space_pos: player.space_pos
                 });
             }
+            space_pos = player.space_pos;
+            space = space_pos.x + "_" + space_pos.y;
+            delete this.space[space][player.name];
             delete this.players[player.id];
 
         });

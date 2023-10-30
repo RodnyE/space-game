@@ -8,6 +8,7 @@ class _Player {
         this.name;
         this.s = s;
         this.pos;
+        this.a = 0;
         this.space_pos;
         this.enableMove;
         this.canMove = false;
@@ -104,6 +105,10 @@ class _Player {
 
     BroadcastToRoom(event, message) {
         this.s.to(this.space_pos.x + "_" + this.space_pos.y).emit(event, message);
+    }
+
+    On(event , callback){
+        this.s.on(event , callback);
     }
 
     setEnableMove (call) {
