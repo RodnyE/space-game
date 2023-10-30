@@ -6,7 +6,7 @@ import JoystickCtrl from "./controls/JoystickCtrl"
 import Fullscreen from "ui/Fullscreen"
 import GameRenderer from "ui/GameRenderer"
 
-import { getGameContext, initGameContext } from "engine/scene"
+import { getGameContext, initGameContext } from "engine/gx"
 
 // Application 
 export default function App () {

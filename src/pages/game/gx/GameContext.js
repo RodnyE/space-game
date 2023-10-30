@@ -1,11 +1,17 @@
 
+import { 
+    Rectangle, 
+    Matrix,
+    Graphics, 
+    Color 
+} from "pixi.js"
+
 import Camera from "gl/Camera"
 import Container from "gl/Container"
-
-import { Rectangle, Matrix, Graphics, Color } from "pixi.js"
 import Entity from "gl/Entity"
-import Player from "./Player"
-import Planet from "./Planet"
+
+import Player from "gx/Player"
+import Planet from "gx/Planet"
 
 import { randomColor } from "utils/random"
 

@@ -1,11 +1,11 @@
 
 import { groupD8, Text, Rectangle } from "pixi.js"
-import GameContext from "../game/GameContext"
+import GameContext from "gx/GameContext"
 
 import createLoader from "engine/loader"
 import loop from "engine/loop"
+import { initSocket, getSocket } from "engine/socket"
 import { t2x } from "utils/scale"
-import { initSocket, getSocket } from "../socket/socket"
 
 let gx;
 

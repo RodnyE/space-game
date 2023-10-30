@@ -1,5 +1,5 @@
 
-import { getSocket } from "../socket/socket"
+import { getSocket } from "engine/socket"
 import { t2x, x2t } from "utils/scale"
 
 const PI = Math.PI;

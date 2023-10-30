@@ -1,6 +1,6 @@
 
 import io from "socket.io-client";
-import { getGameContext } from "engine/scene"
+import { getGameContext } from "engine/gx"
 import { t2x } from "utils/scale"
 
 let socket;

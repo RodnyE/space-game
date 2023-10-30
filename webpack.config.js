@@ -57,6 +57,7 @@ module.exports = {
             "styles": cfg.SRC + "/styles",
             "assets": cfg.SRC + "/assets",
             "gl": cfg.SRC + "/pages/game/gl",
+            "gx": cfg.SRC + "/pages/game/gx",
             "engine": cfg.SRC + "/pages/game/engine",
            
             // programming in mobile apps 
