@@ -12,6 +12,7 @@ class _Player {
         this.space_pos;
         this.enableMove;
         this.canMove = false;
+        this.canSpaceWrap = false;
     }
 
     async sync() {
@@ -88,12 +89,14 @@ class _Player {
         //if(x != -1 && y != -1) 
         this.enableMove();
         this.canMove = true;
+        this.canSpaceWrap = true;
     }
 
     leaveSpace(){
         this.BroadcastToRoom("player_leave" , this.name);
         this.s.leave(this.space_pos.x + "_" + this.space_pos.y);
         this.canMove = false;
+        this.canSpaceWrap = false;
     }
 
     async changeSpace(pos , space_pos){

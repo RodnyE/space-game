@@ -24,6 +24,10 @@ const PlanetModel = (DataTypes) => {
         diameter: {
             type: DataTypes.INTEGER, 
             allowNull: false
+        },
+        owner: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     };
 };
