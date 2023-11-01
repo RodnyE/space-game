@@ -1,6 +1,6 @@
 const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
-const { Player, SpaceZone , Planet } = require(config.HELPERS + "/db.js");
+const { Player, SpaceZone, Planet, Op } = require(config.HELPERS + "/db.js");
 const Maths = require(config.HELPERS + "/maths.js");
 
 class _Space {
@@ -34,10 +34,18 @@ class _Space {
         };
 
         const changeSpaces = async (data) => {
-            if(data.x < 0 || data.x > 1000 || data.y < 0 || data.y > 1000){
-                let mx = (data.x < 0 ? -1 : (data.x > 1000 ? 1 : 0));
-                let my = (data.y < 0 ? -1 : (data.y > 1000 ? 1 : 0));
-                if(space_pos.x == -1 && space_pos.y == -1){
+            const polarize = (data) => {
+                let mx = (data.x < 0 ? 999 : (data.x > 1000 ? 1 : data.x));
+                let my = (data.y < 0 ? 999 : (data.y > 1000 ? 1 : data.y));
+                return { x: mx, y: my };
+            };
+
+            const mirror = (data) => {
+                
+            }
+            if (data.x < 0 || data.x > 1000 || data.y < 0 || data.y > 1000) {
+
+                if (space_pos.x == -1 && space_pos.y == -1) {
                     const sp = await SpaceZone.findAll({
                         where: {
                             type: "sun"
@@ -45,23 +53,40 @@ class _Space {
                     });
                     let c = sp.length;
                     let found = false;
-                    while(found == false){
-                        const s = sp[Maths.Rand(0 , c)];
+                    
+                    while (found == false) {
+                        const s = sp[Maths.Rand(0, c - 1)];
+                        
+                        if (!s) continue;
                         const planets = await Planet.findAll({
                             where: {
-                                spacezone_id: s.id
+                                spacezone_id: s.id,
+                                owner: null,
                             }
                         });
-                        for(let planet of planets){
-                            if(!planet.owner) {
-                                found = s;
-                                break;
-                            }
+                        if (planets.length > 0) {
+                            found = s;
+                            break;
                         }
-                    }
-                    return found;
-                }else{
 
+                    }
+                    const p = polarize(data);
+                    await player.changeSpace(p , found, this.space);
+                    //player.canSpaceWrap = false;
+                    return true;
+                } else {
+                    let mx = (data.x < 0 ? -1 : (data.x > 1000 ? 1 : 0));
+                    let my = (data.y < 0 ? -1 : (data.y > 1000 ? 1 : 0));
+                    const sp = await SpaceZone.findOne({
+                        where: {
+                            x: player.space_pos.x + mx,
+                            y: player.space_pos.y + my
+                        }
+                    });
+                    if(!sp) return false;
+                    const p = polarize(data);
+                    await player.changeSpace(p , sp, this.space);
+                    return true;
                 }
             }
         };
@@ -73,31 +98,26 @@ class _Space {
                 if (player.canMove && data.x && data.y) {
                     player.pos.x = data.x;
                     player.pos.y = data.y;
-                    if((await changeSpaces()) == true) return;
+                    if ((await changeSpaces(data)) == true) return;
                     this.space[space][player.name].pos = data;
-                    if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: {x : data.x , y :data.y}};
-                    else this.pj_changes[space][player.name] = { pos: {x : data.x , y :data.y}};
-                    if(data.a) {
+                    if (!this.pj_changes[space][player.name]) this.pj_changes[space][player.name] = { pos: { x: data.x, y: data.y } };
+                    else this.pj_changes[space][player.name] = { pos: { x: data.x, y: data.y } };
+                    if (data.a) {
                         player.a = data.a;
                         this.pj_changes[space][player.name].a = data.a;
                     }
-                }else if(player.canMove && data.a){
+                } else if (player.canMove && data.a) {
                     player.a = data.a;
                     this.pj_changes[space][player.name].a = data.a;
                 }
             });
         });
-        await player.joinSpace(space_pos.x, space_pos.y , this.space);
-        player.BroadcastToRoom("player_join", {
-            name: player.name,
-            pos: player.pos,
-            a: player.a
-        });
+        await player.joinSpace(space_pos.x, space_pos.y, this.space);
 
-        player.On("disconnect" , async (data) => {
+        player.On("disconnect", async (data) => {
             player.leaveSpace();
-            const p = await Player.findOne({where: {user_id: player.id}});
-            if(p){
+            const p = await Player.findOne({ where: { user_id: player.id } });
+            if (p) {
                 await p.update({
                     pos: player.pos,
                     space_pos: player.space_pos
@@ -111,7 +131,7 @@ class _Space {
         });
 
     }
-    
+
 
     Loop(fps) {
 

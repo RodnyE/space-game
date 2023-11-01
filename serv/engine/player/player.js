@@ -30,7 +30,7 @@ class _Player {
         this.name = pj.name;
         this.pos = pj.pos;
         this.space_pos = pj.space_pos;
-        await this.sendData();
+        //await this.sendData();
         //await this.sendSpaceData();
     }
 
@@ -78,14 +78,22 @@ class _Player {
     }
 
     sendPlayersData(space){
-        this.s.emit("players_data" , space[this.space_pos.x + "_" + this.space_pos.y]);
+        let pd = {...space[this.space_pos.x + "_" + this.space_pos.y]};
+        if(pd[this.name]) delete pd[this.name];
+        this.s.emit("players_data" , pd);
     }
 
     async joinSpace(x , y , space){
         this.s.join(x + "_" + y);
         this.space_pos = {x , y};
         await this.sendSpaceData();
+        await this.sendData();
         this.sendPlayersData(space);
+        this.BroadcastToRoom("player_join", {
+            name: this.name,
+            pos: this.pos,
+            a: this.a
+        });
         //if(x != -1 && y != -1) 
         this.enableMove();
         this.canMove = true;
@@ -99,11 +107,11 @@ class _Player {
         this.canSpaceWrap = false;
     }
 
-    async changeSpace(pos , space_pos){
-        this.leaveSpace();
+    async changeSpace(pos , space_pos , space){
+        await this.leaveSpace();
         this.pos = pos;
-        await this.sendData();
-        await this.joinSpace(space_pos.x , space_pos.y);
+        //await this.sendData();
+        await this.joinSpace(space_pos.x , space_pos.y , space);
     }
 
     BroadcastToRoom(event, message) {
