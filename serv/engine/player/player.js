@@ -95,7 +95,7 @@ class _Player {
             a: this.a
         });
         //if(x != -1 && y != -1) 
-        this.enableMove();
+        //this.enableMove();
         this.canMove = true;
         this.canSpaceWrap = true;
     }

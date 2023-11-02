@@ -33,17 +33,20 @@ class _Space {
             a: player.a
         };
 
-        const changeSpaces = async (data) => {
-            const polarize = (data) => {
-                let mx = (data.x < 0 ? 999 : (data.x > 1000 ? 1 : data.x));
-                let my = (data.y < 0 ? 999 : (data.y > 1000 ? 1 : data.y));
-                return { x: mx, y: my };
-            };
 
-            const mirror = (data) => {
-                
-            }
-            if (data.x < 0 || data.x > 1000 || data.y < 0 || data.y > 1000) {
+
+        const changeSpaces = async (data) => {
+            if (data.x < 0 || data.x >= 1000 || data.y < 0 || data.y >= 1000) {
+                const polarize = (data) => {
+                    let mx = (data.x < 0 ? 999 : (data.x >= 1000 ? 1 : data.x));
+                    let my = (data.y < 0 ? 999 : (data.y >= 1000 ? 1 : data.y));
+                    return { x: mx, y: my };
+                };
+    
+                const mirror = async (x) => {
+                    const c = Math.floor(Math.sqrt(await SpaceZone.count()));
+                    return (x >= c ? 0 : (x < 0 ? c : x));
+                }
 
                 if (space_pos.x == -1 && space_pos.y == -1) {
                     const sp = await SpaceZone.findAll({
@@ -53,10 +56,10 @@ class _Space {
                     });
                     let c = sp.length;
                     let found = false;
-                    
+
                     while (found == false) {
                         const s = sp[Maths.Rand(0, c - 1)];
-                        
+
                         if (!s) continue;
                         const planets = await Planet.findAll({
                             where: {
@@ -71,21 +74,23 @@ class _Space {
 
                     }
                     const p = polarize(data);
-                    await player.changeSpace(p , found, this.space);
+                    await player.changeSpace(p, found, this.space);
                     //player.canSpaceWrap = false;
                     return true;
                 } else {
-                    let mx = (data.x < 0 ? -1 : (data.x > 1000 ? 1 : 0));
-                    let my = (data.y < 0 ? -1 : (data.y > 1000 ? 1 : 0));
+                    let mx = (data.x < 0 ? -1 : (data.x >= 1000 ? 1 : 0));
+                    let my = (data.y < 0 ? -1 : (data.y >= 1000 ? 1 : 0));
+                    let nx = await mirror(player.space_pos.x + mx);
+                    let ny = await mirror(player.space_pos.y + my);
                     const sp = await SpaceZone.findOne({
                         where: {
-                            x: player.space_pos.x + mx,
-                            y: player.space_pos.y + my
+                            x: nx,
+                            y: ny
                         }
                     });
-                    if(!sp) return false;
+                    if (!sp) return false;
                     const p = polarize(data);
-                    await player.changeSpace(p , sp, this.space);
+                    await player.changeSpace(p, sp, this.space);
                     return true;
                 }
             }
@@ -113,8 +118,10 @@ class _Space {
             });
         });
         await player.joinSpace(space_pos.x, space_pos.y, this.space);
+        player.enableMove();
 
         player.On("disconnect", async (data) => {
+            console.log("disco");
             player.leaveSpace();
             const p = await Player.findOne({ where: { user_id: player.id } });
             if (p) {
