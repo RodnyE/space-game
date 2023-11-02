@@ -6,7 +6,7 @@ EndColor='\033[0m'
 
 # compile 
 echo -e "\n${BCyan}Compiling...${EndColor}\n"
-npm run build
+# npm run build
 git add dist -f
 
 # create new database
@@ -19,9 +19,9 @@ git rm --cached -r src
 git rm --cached -r public
 
 # push
-git commit -m "[[update evennode]]"
-echo -e "\n${BCyan}Uploading to evennode...${EndColor}\n" 
-git push -f evennode main
+git commit -m "[[update $1]]"
+echo -e "\n${BCyan}Uploading to $1...${EndColor}\n" 
+git push -f $1 main
 
 # restore
 git reset --soft HEAD~1
