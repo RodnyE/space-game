@@ -1,7 +1,8 @@
 
 import io from "socket.io-client";
 import { getGameContext } from "engine/gx"
-import { t2x, a2r } from "utils/scale"
+import { t2x } from "utils/scale"
+import { angle2radian, temperature2color } from "utils/conversion"
 
 let socket;
 
@@ -32,8 +33,18 @@ export const initSocket = () => {
         let gx = getGameContext();
         
         data.planets.forEach((planet) => {
+            let temp = planet.temperature;
+            let color = temperature2color(temp); // get tint color by temperature 
+            let texture = gx.resources[
+                "planet_0" + (Math.round(6 * (temp + 300) / 600) || 1) // get texture 01 to 06 by temperature
+            ];
+            
             gx.setPlanet({
                 name: planet.name,
+                texture,
+                color,
+                temperature: temp,
+                
                 x: t2x(planet.x),
                 y: t2x(planet.y),
                 radius: t2x(planet.diameter/2),
@@ -46,7 +57,7 @@ export const initSocket = () => {
                 x: t2x(sun.x),
                 y: t2x(sun.y),
                 radius: t2x(sun.diameter/2),
-                temperature: sun.temperature,
+                temperature: sun.temperature || 300,
             })
         });
     });
@@ -76,7 +87,7 @@ export const initSocket = () => {
             
             gx.setPlayer({
                 name: pj_name,
-                texture: gx.resources.ship, // temporary texture
+                texture: gx.resources.ship_03, // temporary texture
                 x: t2x(pj.pos.x),
                 y: t2x(pj.pos.y),
                 rotation: 0,
@@ -130,7 +141,7 @@ export const initSocket = () => {
             
             if (data.pos.x) pj.targetX = t2x(data.pos.x);
             if (data.pos.y) pj.targetY = t2x(data.pos.y);
-            if (data.a) pj.targetRotation = a2r(data.a);
+            if (data.a) pj.targetRotation = angle2radian(data.a);
             
         } 
     });

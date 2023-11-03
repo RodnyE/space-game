@@ -1,6 +1,7 @@
 
 import { getSocket } from "engine/socket"
-import { t2x, x2t, r2a } from "utils/scale"
+import { t2x, x2t } from "utils/scale"
+import { radian2angle } from "utils/conversion"
 
 const PI = Math.PI;
 let loopStep = 0;
@@ -68,7 +69,7 @@ export default function loop (gx) {
         socket.emit("move", {
             x: x2t(player.x).toFixed(2) - 0,
             y: x2t(player.y).toFixed(2) - 0,
-            a: r2a(player.rotation).toFixed(2) - 0,
+            a: radian2angle(player.rotation).toFixed(2) - 0,
         });
     }
     

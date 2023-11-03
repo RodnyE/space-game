@@ -13,7 +13,7 @@ import Entity from "gl/Entity"
 import Player from "gx/Player"
 import Planet from "gx/Planet"
 
-import { randomColor } from "utils/random"
+import { randomInt } from "utils/random"
 
 /**
  * Game 
@@ -86,7 +86,7 @@ export default class GameContext {
         // Player
         let player = this.setPlayer({
             name: "current",
-            texture: resources.ship,
+            texture: resources.ship_01,
             x: 0,
             y: 0,
             rotation: 0,
@@ -109,13 +109,19 @@ export default class GameContext {
     /**
      * Add planets
      */
-    setPlanet ({name, temperature, radius, x, y}) {
-        let color = randomColor();
+    setPlanet ({
+        name, 
+        texture,
+        color,
+        temperature, 
+        radius, x, y
+    }) {
         let planet = new Planet({
             name,
-            radius,
-            temperature,
+            texture,
             color,
+            temperature,
+            radius,
         });
         
         if (x || y) {
@@ -131,8 +137,8 @@ export default class GameContext {
         let minimap = this.minimap;
         minimap.beginFill(0x000088);
         minimap.drawCircle(
-            (x - radius) * minimap.k, 
-            (y - radius) * minimap.k, 
+            x * minimap.k, 
+            y * minimap.k, 
             radius * minimap.k
         );
         
@@ -146,12 +152,11 @@ export default class GameContext {
         let color = new Color("yellow");
         let sun = new Planet({
             name,
-            radius,
-            temperature,
+            texture: this.resources.planet_04,
             color,
+            temperature,
+            radius,
         });
-        sun.beginFill(color);
-        sun.drawCircle(0, 0, radius);
         
         // position
         sun.x = x;
@@ -161,8 +166,8 @@ export default class GameContext {
         let minimap = this.minimap;
         minimap.beginFill(color);
         minimap.drawCircle(
-            (x - radius) * minimap.k, 
-            (y - radius) * minimap.k, 
+            x * minimap.k, 
+            y * minimap.k, 
             radius * minimap.k
         );
         
