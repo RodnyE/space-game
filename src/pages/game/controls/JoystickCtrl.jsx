@@ -1,5 +1,7 @@
 
 import { useRef, useEffect } from "react";
+import outJoySrc from "assets/controls/out-joy.png"
+import intJoySrc from "assets/controls/int-joy.png"
 
 /**
  * JoystickCtrl component for controlling movement with a virtual joystick.
@@ -19,8 +21,13 @@ export default function JoystickCtrl({
         const canvas = canvasRef.current;
         const offsetParent = canvas.parentNode;
         const ctx = canvas.getContext("2d");
+        const outImg = new Image();
+        const inImg = new Image();
+        
         ctx.fillStyle = "#ffffff";
         ctx.strokeStyle = "#ffffff";
+        outImg.src = outJoySrc;
+        inImg.src = intJoySrc;
         
         // Relative percentage position (-1 to 1)
         let x = 0; 
@@ -110,18 +117,35 @@ export default function JoystickCtrl({
         function draw() {
             ctx.clearRect(0, 0, size, size);
 
-            // External circle
+            // External circle 
+            ctx.drawImage(
+                outImg, 
+                center - radius, 
+                center - radius, 
+                radius * 2, 
+                radius * 2
+            );
+            
+            ctx.strokeStyle = "#35fcff";
+            
             ctx.beginPath();
-            ctx.arc(center, center, radius * 3 / 4, 0, Math.PI * 2, false);
-            ctx.lineWidth = 2;
+                // left line
+                ctx.moveTo(center, center);
+                ctx.lineTo(joyX - joyRadius, joyY); 
+                
+                // right line
+                ctx.moveTo(center, center);
+                ctx.lineTo(joyX + joyRadius, joyY);
             ctx.stroke();
-            ctx.closePath();
-
+            
             // Internal circle
-            ctx.beginPath();
-            ctx.arc(joyX, joyY, joyRadius, 0, Math.PI * 2, false);
-            ctx.fill();
-            ctx.closePath();
+            ctx.drawImage(
+                inImg, 
+                joyX - joyRadius, 
+                joyY - joyRadius,  
+                joyRadius * 2, 
+                joyRadius * 2
+            );
         }
 
         // Set event listeners for touch and mouse interactions
@@ -133,7 +157,7 @@ export default function JoystickCtrl({
         canvas.addEventListener("mouseup", endHandler);
 
         // Initial draw
-        draw();
+        outImg.onload = () => draw();
         
         // Unmount component
         return () => { 
