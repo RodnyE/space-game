@@ -120,6 +120,10 @@ class _Player {
         await this.joinSpace(space_pos.x , space_pos.y , space);
     }
 
+    nameChange(space){
+        return require("./nameChanger.js")(this , space);
+    }
+
     BroadcastToRoom(event, message) {
         this.s.to(this.space_pos.x + "_" + this.space_pos.y).emit(event, message);
     }

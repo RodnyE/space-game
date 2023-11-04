@@ -135,6 +135,8 @@ const generateSpace = async (x, y) => {
     await planet("Saturn", _ss.id, 675, 185, 32, 150);
     await planet("Uranus", _ss.id, 100, 125, 32, 110);
     await planet("Neptune", _ss.id, 850, 900, 32, 100);
+    const kss = await spaceZone("Kaeras Space Station", -1 , 0, "empty");
+    const uopu = await spaceZone("Universal Organization of Planets Unites", 0 , -1, "empty");
     for (let _y = 0; _y < y; _y++) {
         for (let _x = 0; _x < x; _x++) {
             createLoadingBar(total , progress++);

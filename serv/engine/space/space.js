@@ -15,6 +15,10 @@ class _Space {
         const c = Math.ceil(Math.sqrt(await SpaceZone.count() - 1));
         this.space[-1 + "_" + -1] = {};
         this.pj_changes[-1 + "_" + -1] = {};
+        this.space[-1 + "_" + 0] = {};
+        this.pj_changes[-1 + "_" + 0] = {};
+        this.space[0 + "_" + -1] = {};
+        this.pj_changes[0 + "_" + -1] = {};
         for (let x = 0; x < c; x++) {
             for (let y = 0; y < c; y++) {
                 this.space[x + "_" + y] = {};
@@ -37,7 +41,7 @@ class _Space {
                 };
     
                 const mirror = async (x) => {
-                    const c = Math.floor(Math.sqrt(await SpaceZone.count()));
+                    const c = Math.floor(Math.sqrt((await SpaceZone.count()) - config.SPACES.saved));
                     return (x >= c ? 0 : (x < 0 ? c : x));
                 }
 
@@ -51,7 +55,7 @@ class _Space {
                     let found = false;
 
                     while (found == false) {
-                        const s = sp[Maths.Rand(0, c - 1)];
+                        const s = sp[Maths.Rand(0, c - config.SPACES.saved)];
 
                         if (!s) continue;
                         const planets = await Planet.findAll({
@@ -112,9 +116,8 @@ class _Space {
         });
         await player.joinSpace(space_pos.x, space_pos.y, this.space);
         player.enableMove();
-
+        player.nameChange(this.space);
         player.On("disconnect", async (data) => {
-            console.log("disco");
             player.leaveSpace(this.space);
             const p = await Player.findOne({ where: { user_id: player.id } });
             if (p) {
