@@ -12,7 +12,7 @@ class _Space {
     }
 
     async config() {
-        const c = Math.ceil(Math.sqrt(await SpaceZone.count()));
+        const c = Math.ceil(Math.sqrt(await SpaceZone.count() - 1));
         this.space[-1 + "_" + -1] = {};
         this.pj_changes[-1 + "_" + -1] = {};
         for (let x = 0; x < c; x++) {
@@ -27,13 +27,6 @@ class _Space {
         this.players[player.id] = player;
         let space_pos = player.space_pos;
         let space = space_pos.x + "_" + space_pos.y;
-
-        this.space[space][player.name] = {
-            pos: player.pos,
-            a: player.a
-        };
-
-
 
         const changeSpaces = async (data) => {
             if (data.x < 0 || data.x >= 1000 || data.y < 0 || data.y >= 1000) {
@@ -122,7 +115,7 @@ class _Space {
 
         player.On("disconnect", async (data) => {
             console.log("disco");
-            player.leaveSpace();
+            player.leaveSpace(this.space);
             const p = await Player.findOne({ where: { user_id: player.id } });
             if (p) {
                 await p.update({
@@ -132,7 +125,6 @@ class _Space {
             }
             space_pos = player.space_pos;
             space = space_pos.x + "_" + space_pos.y;
-            delete this.space[space][player.name];
             delete this.players[player.id];
 
         });

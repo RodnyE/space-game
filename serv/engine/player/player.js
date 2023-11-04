@@ -88,6 +88,10 @@ class _Player {
         this.space_pos = {x , y};
         await this.sendSpaceData();
         await this.sendData();
+        space[x + "_" + y][this.name] = {
+            pos: this.pos,
+            a: this.a
+        };
         this.sendPlayersData(space);
         this.BroadcastToRoom("player_join", {
             name: this.name,
@@ -100,15 +104,17 @@ class _Player {
         this.canSpaceWrap = true;
     }
 
-    leaveSpace(){
+    leaveSpace(space){
         this.BroadcastToRoom("player_leave" , this.name);
-        this.s.leave(this.space_pos.x + "_" + this.space_pos.y);
+        const sp = this.space_pos.x + "_" + this.space_pos.y;
+        this.s.leave(sp);
+        if(space[sp][this.name]) delete space[sp][this.name];
         this.canMove = false;
         this.canSpaceWrap = false;
     }
 
     async changeSpace(pos , space_pos , space){
-        await this.leaveSpace();
+        await this.leaveSpace(space);
         this.pos = pos;
         //await this.sendData();
         await this.joinSpace(space_pos.x , space_pos.y , space);
