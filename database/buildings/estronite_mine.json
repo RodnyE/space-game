@@ -1,0 +1,230 @@
+{
+  "name": "Mina de Estronita",
+  "level": {
+    "1": {
+      "cost": [
+        150,
+        100
+      ],
+      "production": 50,
+      "energy": 20,
+      "time": 60
+    },
+    "2": {
+      "cost": [
+        198,
+        132
+      ],
+      "production": 65,
+      "energy": 26,
+      "time": 79
+    },
+    "3": {
+      "cost": [
+        261,
+        174
+      ],
+      "production": 84,
+      "energy": 33,
+      "time": 105
+    },
+    "4": {
+      "cost": [
+        345,
+        229
+      ],
+      "production": 110,
+      "energy": 43,
+      "time": 138
+    },
+    "5": {
+      "cost": [
+        457,
+        304
+      ],
+      "production": 143,
+      "energy": 56,
+      "time": 183
+    },
+    "6": {
+      "cost": [
+        604,
+        402
+      ],
+      "production": 182,
+      "energy": 72,
+      "time": 241
+    },
+    "7": {
+      "cost": [
+        796,
+        529
+      ],
+      "production": 229,
+      "energy": 90,
+      "time": 318
+    },
+    "8": {
+      "cost": [
+        1051,
+        701
+      ],
+      "production": 288,
+      "energy": 115,
+      "time": 421
+    },
+    "9": {
+      "cost": [
+        1386,
+        924
+      ],
+      "production": 363,
+      "energy": 144,
+      "time": 556
+    },
+    "10": {
+      "cost": [
+        1830,
+        1218
+      ],
+      "production": 457,
+      "energy": 181,
+      "time": 735
+    },
+    "11": {
+      "cost": [
+        2415,
+        1606
+      ],
+      "production": 576,
+      "energy": 230,
+      "time": 971
+    },
+    "12": {
+      "cost": [
+        3183,
+        2119
+      ],
+      "production": 725,
+      "energy": 290,
+      "time": 1280
+    },
+    "13": {
+      "cost": [
+        4199,
+        2789
+      ],
+      "production": 912,
+      "energy": 364,
+      "time": 1691
+    },
+    "14": {
+      "cost": [
+        5547,
+        3685
+      ],
+      "production": 1146,
+      "energy": 458,
+      "time": 2227
+    },
+    "15": {
+      "cost": [
+        7327,
+        4879
+      ],
+      "production": 1443,
+      "energy": 577,
+      "time": 2949
+    },
+    "16": {
+      "cost": [
+        9664,
+        6431
+      ],
+      "production": 1817,
+      "energy": 727,
+      "time": 3899
+    },
+    "17": {
+      "cost": [
+        12749,
+        8465
+      ],
+      "production": 2290,
+      "energy": 916,
+      "time": 5150
+    },
+    "18": {
+      "cost": [
+        16838,
+        11177
+      ],
+      "production": 2883,
+      "energy": 1153,
+      "time": 6797
+    },
+    "19": {
+      "cost": [
+        22211,
+        14785
+      ],
+      "production": 3625,
+      "energy": 1449,
+      "time": 8977
+    },
+    "20": {
+      "cost": [
+        29343,
+        19554
+      ],
+      "production": 4564,
+      "energy": 1826,
+      "time": 11846
+    },
+    "21": {
+      "cost": [
+        38741,
+        25794
+      ],
+      "production": 5748,
+      "energy": 2299,
+      "time": 15652
+    },
+    "22": {
+      "cost": [
+        51143,
+        33983
+      ],
+      "production": 7239,
+      "energy": 2895,
+      "time": 20738
+    },
+    "23": {
+      "cost": [
+        67363,
+        44848
+      ],
+      "production": 9104,
+      "energy": 3641,
+      "time": 27392
+    },
+    "24": {
+      "cost": [
+        88870,
+        59070
+      ],
+      "production": 11459,
+      "energy": 4584,
+      "time": 36180
+    },
+    "25": {
+      "cost": [
+        117197,
+        77866
+      ],
+      "production": 14447,
+      "energy": 5779,
+      "time": 47760
+    }
+  }
+}

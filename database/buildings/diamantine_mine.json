@@ -1,0 +1,230 @@
+{
+    "name": "Mina de Diamantina",
+    "level": {
+        "1": {
+            "cost": [
+                105,
+                155
+            ],
+            "production": 45,
+            "energy": 22,
+            "time": 65
+        },
+        "2": {
+            "cost": [
+                139,
+                205
+            ],
+            "production": 58,
+            "energy": 29,
+            "time": 86
+        },
+        "3": {
+            "cost": [
+                183,
+                270
+            ],
+            "production": 75,
+            "energy": 37,
+            "time": 113
+        },
+        "4": {
+            "cost": [
+                242,
+                356
+            ],
+            "production": 97,
+            "energy": 48,
+            "time": 150
+        },
+        "5": {
+            "cost": [
+                320,
+                475
+            ],
+            "production": 122,
+            "energy": 61,
+            "time": 197
+        },
+        "6": {
+            "cost": [
+                425,
+                627
+            ],
+            "production": 154,
+            "energy": 77,
+            "time": 261
+        },
+        "7": {
+            "cost": [
+                561,
+                825
+            ],
+            "production": 192,
+            "energy": 96,
+            "time": 345
+        },
+        "8": {
+            "cost": [
+                742,
+                1096
+            ],
+            "production": 240,
+            "energy": 120,
+            "time": 457
+        },
+        "9": {
+            "cost": [
+                983,
+                1447
+            ],
+            "production": 300,
+            "energy": 150,
+            "time": 603
+        },
+        "10": {
+            "cost": [
+                1302,
+                1923
+            ],
+            "production": 375,
+            "energy": 188,
+            "time": 798
+        },
+        "11": {
+            "cost": [
+                1722,
+                2404
+            ],
+            "production": 469,
+            "energy": 234,
+            "time": 1053
+        },
+        "12": {
+            "cost": [
+                2277,
+                3365
+            ],
+            "production": 586,
+            "energy": 293,
+            "time": 1391
+        },
+        "13": {
+            "cost": [
+                3006,
+                4489
+            ],
+            "production": 732,
+            "energy": 366,
+            "time": 1839
+        },
+        "14": {
+            "cost": [
+                3974,
+                5928
+            ],
+            "production": 915,
+            "energy": 457,
+            "time": 2432
+        },
+        "15": {
+            "cost": [
+                5253,
+                7851
+            ],
+            "production": 1144,
+            "energy": 572,
+            "time": 3212
+        },
+        "16": {
+            "cost": [
+                6960,
+                10477
+            ],
+            "production": 1430,
+            "energy": 715,
+            "time": 4243
+        },
+        "17": {
+            "cost": [
+                9214,
+                13951
+            ],
+            "production": 1787,
+            "energy": 893,
+            "time": 5604
+        },
+        "18": {
+            "cost": [
+                12167,
+                18459
+            ],
+            "production": 2234,
+            "energy": 1117,
+            "time": 7395
+        },
+        "19": {
+            "cost": [
+                16082,
+                24435
+            ],
+            "production": 2792,
+            "energy": 1396,
+            "time": 9774
+        },
+        "20": {
+            "cost": [
+                21243,
+                32316
+            ],
+            "production": 3490,
+            "energy": 1745,
+            "time": 12893
+        },
+        "21": {
+            "cost": [
+                28116,
+                42694
+            ],
+            "production": 4362,
+            "energy": 2181,
+            "time": 17031
+        },
+        "22": {
+            "cost": [
+                37223,
+                56512
+            ],
+            "production": 5453,
+            "energy": 2726,
+            "time": 22458
+        },
+        "23": {
+            "cost": [
+                49241,
+                74897
+            ],
+            "production": 6816,
+            "energy": 3408,
+            "time": 29634
+        },
+        "24": {
+            "cost": [
+                65185,
+                99276
+            ],
+            "production": 8520,
+            "energy": 4260,
+            "time": 39168
+        },
+        "25": {
+            "cost": [
+                86010,
+                131497
+            ],
+            "production": 10650,
+            "energy": 5325,
+            "time": 51793
+        }
+    }
+}

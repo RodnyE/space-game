@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Estronite",
+    "desc": "El Estronite es un metal común que se encuentra en abundancia en el espacio. Se utiliza en la construcción de componentes básicos de naves espaciales debido a su disponibilidad y facilidad de procesamiento."
+  },
+  {
+    "name": "Diamantino",
+    "desc": "El Cristal Diamantino es un material cristalino extremadamente duro que se utiliza en la fabricación de escudos y componentes protectores para naves espaciales. Su dureza lo hace ideal para resistir impactos y radiación cósmica."
+  },
+  {
+    "name": "Platirio",
+    "desc": "El Platirio es un metal altamente resistente conocido por su increíble durabilidad y capacidad para soportar condiciones extremas en el espacio. Se utiliza en la construcción de cascos de naves espaciales y componentes de alto estrés."
+  },
+  {
+    "name": "Xenio",
+    "desc": "El Xenio Inestable es un elemento altamente reactivo que se utiliza en sistemas de propulsión avanzados para acelerar naves espaciales. Su inestabilidad lo hace ideal para alcanzar velocidades extremas en cortos períodos de tiempo."
+  }
+]
