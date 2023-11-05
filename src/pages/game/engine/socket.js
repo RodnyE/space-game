@@ -106,7 +106,7 @@ export const initSocket = () => {
          
         gx.setPlayer({
             name: data.name,
-            texture: gx.resources.ship,
+            texture: gx.resources.ship_03,
             x: t2x(data.pos.x),
             y: t2x(data.pos.y),
             rotation: 0,

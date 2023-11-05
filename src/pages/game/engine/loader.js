@@ -15,6 +15,7 @@ const importAll = (r) => {
     return cache;
 }
 
+const joyImgs = importAll(require.context("assets/controls", true, /\.png$/));
 const shipImgs = importAll(require.context("assets/ships", true, /\.png$/));
 const planetImgs = importAll(require.context("assets/planets", true, /\.png$/));
 
@@ -37,12 +38,13 @@ export default function createLoader () {
             loader.add({
                 name: imgUrl.replace("./", "").replace(".png", ""),
                 src: imgs[imgUrl],
-                preprocess
+                preprocess,
             });
         }
     };
     
     addImgMap(planetImgs);
+    addImgMap(joyImgs);
     addImgMap(shipImgs, (texture) => {
         texture.rotate = groupD8.N;
     });

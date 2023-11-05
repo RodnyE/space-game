@@ -1,4 +1,5 @@
 
+import { Rectangle } from "pixi.js"
 import { getSocket } from "engine/socket"
 import { t2x, x2t } from "utils/scale"
 import { radian2angle } from "utils/conversion"
@@ -15,6 +16,9 @@ let loopStep = 0;
 export default function loop (gx) {
     const {
         layer1,
+        layer2,
+        hjumpFilter,
+        
         player,
         players,
         camera,
@@ -22,6 +26,8 @@ export default function loop (gx) {
         joy,
         minimap,
     } = gx;
+    
+    let hjumpEnabled = false;
     
     //
     // Update player !
@@ -33,11 +39,37 @@ export default function loop (gx) {
     
     player.vx += (vx - player.vx) * 0.01;
     player.vy += (vy - player.vy) * 0.01; 
-    player.x += player.vx;
-    player.y += player.vy;
+    
+    let player_x = player.x + player.vx;
+    let player_y = player.y + player.vy;
+    
+    // 
+    // World collision
+    //
+    if (player_x < player.width) {
+        hjumpEnabled = true;
+        player_x = player.width;
+    }
+    else if (player_x > layer1.width - player.width) {
+        hjumpEnabled = true;
+        player_x = layer1.width - player.width;
+    }
+    
+    if (player_y < player.height) {
+        hjumpEnabled = true;
+        player_y = player.height;
+    }
+    else if (player_y > layer1.height - player.height) {
+        hjumpEnabled = true;
+        player_y = layer1.height - player.height;
+    }
+    
+    player.x = player_x;
+    player.y = player_y;
     
     // joystick pressed !
-    if (joy.s) player.rotation += (targetRotation - player.rotation) * 0.09; 
+    if (joy.pressed) player.rotation += (targetRotation - player.rotation) * 0.09; 
+    
     
     //
     // Update all players !
@@ -46,9 +78,9 @@ export default function loop (gx) {
         if (pj_name === "current") continue; // ignore if is user
        
         let pj = players[pj_name];
-        pj.x += (pj.targetX - pj.x) * 0.03;
-        pj.y += (pj.targetY - pj.y) * 0.03;
-        pj.rotation += (pj.targetRotation - pj.rotation) * 0.09;
+        pj.x += (pj.targetX - pj.x) * 0.1;
+        pj.y += (pj.targetY - pj.y) * 0.1;
+        pj.rotation += (pj.targetRotation - pj.rotation) * 0.1;
         
         minimap.beginFill(0xff0000);
         minimap.drawRect(pj.x * minimap.k, pj.y * minimap.k, 2, 2);
@@ -59,6 +91,19 @@ export default function loop (gx) {
     //
     camera.x += (player.x - camera.x) * 0.1;
     camera.y += (player.y - camera.y) * 0.1; 
+    
+    //
+    // Hyperjump camera !
+    //
+    if (hjumpEnabled && !gx.hjumpEnabled) {
+        gx.hjumpEnabled = true; 
+        hjumpFilter.enabled = true;
+    }
+    else if (!hjumpEnabled && gx.hjumpEnabled) {
+        gx.hjumpEnabled = false;
+        hjumpFilter.enabled = false;
+    }
+    
     
     //
     // Emit current player position to server

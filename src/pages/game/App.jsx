@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react"
 
 import Button from "ui/Button"
-import JoystickCtrl from "./controls/JoystickCtrl"
 import Fullscreen from "ui/Fullscreen"
 import GameRenderer from "ui/GameRenderer"
 
@@ -12,9 +11,7 @@ import { getGameContext, initGameContext } from "engine/gx"
 export default function App () {
     const [fullscreen, setFullscreen] = useState(false);
     const [play, setPlay] = useState(null);
-    const [gx, setGX] = useState({});
-    
-    let _gx = gx;
+    const [gx, setGX] = useState({}); 
     
     useEffect(() => {
         if (gx && gx.music) {
@@ -42,7 +39,6 @@ export default function App () {
             height: renderer.height,
         })
         .then((gx) => {
-            _gx = gx;
             setGX(gx);
             setPlay(true);
         })
@@ -63,19 +59,10 @@ export default function App () {
                 <GameRenderer 
                     scene={gx.scene} 
                     height={500}
-                    ratio={3/2}
                     play={play}
                     onLoop={gx.loop}
                     onReady={readyHandler}
-                />  
-                <JoystickCtrl 
-                    style={{
-                        position: "absolute",
-                        bottom: "1rem",
-                        left: "1rem"
-                    }}
-                    onMove={(joy) => {_gx.joy = joy}}
-                />
+                /> 
             </Fullscreen>
         }
     </div>)

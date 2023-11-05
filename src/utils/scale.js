@@ -1,10 +1,10 @@
 
 // Tile to Pixels
 export const t2x = (tile) => {
-    return tile * 10;
+    return tile * 30;
 }
 
 // Pixel to Tile
 export const x2t = (px) => {
-    return px / 10;
+    return px / 30;
 }

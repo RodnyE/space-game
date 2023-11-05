@@ -44,8 +44,10 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
         gx.music.play();
         
         // 
-        gx.loop = () => loop(gx);
-        gx.joy = {x:0, y:0, s:0};
+        gx.loop = () => {
+            loop(gx);
+            gx.joystickEntity.tickerLoop();
+        }
         
         // Connect to server
         initSocket();

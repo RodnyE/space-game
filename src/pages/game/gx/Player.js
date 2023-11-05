@@ -17,7 +17,7 @@ export default class Player extends Entity {
         this.anchor.x = 0.5;
         this.anchor.y = 0.5;
         
-        this.speed = 5;
+        this.speed = 15;
         this.rotationSpeed = 1;
         
         this.width = 90;

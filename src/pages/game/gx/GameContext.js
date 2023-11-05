@@ -5,11 +5,13 @@ import {
     Graphics, 
     Color 
 } from "pixi.js"
+import { ZoomBlurFilter } from "@pixi/filter-zoom-blur"
 
 import Camera from "gl/Camera"
 import Container from "gl/Container"
 import Entity from "gl/Entity"
 
+import JoystickCtrl from "gx/JoystickCtrl"
 import Player from "gx/Player"
 import Planet from "gx/Planet"
 
@@ -41,15 +43,29 @@ export default class GameContext {
         let scene = new Container();
         this.scene = scene;
         
-        // game container
-        let layer1 = new Container();
-        let layer2 = new Container();
         
-        layer1.sortableChildren = true;
-        scene.addChild(layer2);
-        scene.addChild(layer1);
-        this.layer1 = layer1;
+        // game filters
+        let hjumpFilter = new ZoomBlurFilter();
+            hjumpFilter.enabled = false;
+        this.hjumpFilter = hjumpFilter;
+        
+        
+        // Layouts
+        let layer1 = new Container(); // game entities
+        let layer2 = new Container(); // background 
+        let gameLayer = new Container(); 
+        
+        layer1.sortableChildren = true; 
+        gameLayer.filterArea = new Rectangle(0, 0, canvas.width, canvas.height);
+        gameLayer.addChild(layer2);
+        gameLayer.addChild(layer1);
+        gameLayer.filters = [hjumpFilter];
+        scene.addChild(gameLayer);
+        
+        this.layer1 = layer1; 
         this.layer2 = layer2;
+        this.gameLayer = gameLayer;
+         
         
         // 
         let camera = new Camera(layer1, { 
@@ -92,6 +108,19 @@ export default class GameContext {
             rotation: 0,
         });
         this.player = player;
+        
+        
+        // Joystick !
+        let joystick = new JoystickCtrl({
+            internalTexture: resources["int-joy"],
+            externalTexture: resources["out-joy"],
+            size: 250,
+        });
+        joystick.x = 50;
+        joystick.y = - 50 + canvas.height - joystick.height;
+        scene.addChild(joystick);
+        this.joystickEntity = joystick;
+        this.joy = joystick.joy;
         
         
     }
