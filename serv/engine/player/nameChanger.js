@@ -10,6 +10,13 @@ module.exports = (player , space) => {
             });
 
             if(!p) return;
+            const exist = await Player.findOne({
+                where: {
+                    name: data
+                }
+            });
+            if(exist) return player.Emit("change_name" , "NAME_EXISTS");
+            if(data.length > 16 || data.length < 4) return player.Emit("change_name" , "NAME_LENGTH");
             await p.update({
                 name: data
             });

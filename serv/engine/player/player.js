@@ -128,6 +128,10 @@ class _Player {
         this.s.to(this.space_pos.x + "_" + this.space_pos.y).emit(event, message);
     }
 
+    Emit(event , message){
+        this.s.emit(event , message);
+    }
+
     On(event , callback){
         this.s.on(event , callback);
     }
