@@ -19,10 +19,9 @@ import {
  */
 export default function GameRenderer ({
     height,
-    ratio = 3/2,
     resolution = 1,
     
-    scene,
+    scene, renderTexture,
     play,
     onLoop = () => {},
     onReady = () => {},
@@ -32,6 +31,7 @@ export default function GameRenderer ({
     const rendererRef = useRef(null);
     const tickerRef = useRef(null);
     
+    const ratio = Math.max(screen.width, screen.height) / Math.min(screen.width, screen.height);
     const canvas_height = height * resolution;
     const canvas_width = canvas_height * ratio;
     
@@ -58,7 +58,7 @@ export default function GameRenderer ({
         const renderer = rendererRef.current;
         ticker.add(() => {
             onLoop();
-            renderer.render(scene);
+            renderer.render(scene, {renderTexture});
         });
         
         // set new ticker
