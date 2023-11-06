@@ -52,5 +52,9 @@ router.use('/facebook',
     }
     ));
 
+router.post('/login',
+  passport.authenticate('local', { successRedirect: '/game', failureRedirect: '/auth/login' }),
+  (req, res) => {}
+);
 
 module.exports = router;

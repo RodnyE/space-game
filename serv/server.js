@@ -14,6 +14,8 @@ var SQLiteStore = require('connect-sqlite3')(sessions);
 require("./middlewares/google.js");
 //Facebook Middleware
 require("./middlewares/facebook.js");
+//Local Middleware
+require("./middlewares/login.js");
 
 // Global middlewares
 app.use(express.json());
