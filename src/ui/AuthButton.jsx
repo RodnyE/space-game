@@ -6,7 +6,9 @@ import facebookImg from "assets/facebook-login.png"
 
 export default function AuthButton ({
     children,
+    className,
     type,
+    onClick,
 }) {
     
     let icon = null;
@@ -30,12 +32,12 @@ export default function AuthButton ({
     
     return (
         <div 
-            className="auth-btn hover-btn" 
-            onClick={handleClick}
+            className={"auth-btn hover-btn " + className}
+            onClick={onClick || handleClick}
         >
-            <img src={icon} className="auth-btn__icon"/>
-            <div className="auth-btn__label">
-                { label }
+            {icon && <img src={icon} className="auth-btn__icon"/>}
+            <div className="auth-btn_label">
+                { children || label }
             </div>
         </div>
     )
