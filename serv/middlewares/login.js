@@ -5,23 +5,21 @@ const { User } = require(config.SERV + "/helpers/db.js");
 const uid = require(config.SERV + "/helpers/uid.js");
 
 
-passport.use("local" , new LocalStrategy(
-    (username, password, done) => {
-      User.findOrCreate({ where: { username: username } })
-        .spread((user, created) => {
-          if (created) {
-            // Nuevo usuario
-            return done(null, false);
-          }
-  
-          if (password != user.password) {
-            return done(null, false);
-          }
-  
-          return done(null, user);
-        })
-        .catch(err => {
-          return done(err);
-        });
+passport.use("local", new LocalStrategy(
+  async (username, password, done) => {
+    try {
+      const [user, created] = await User.findOrCreate({
+        where: { username, password },
+        defaults: {
+          username,
+          password,
+          user_id: uid.alphanum(8)
+        }
+      });
+      done(null, user || created);
+    } catch (err) {
+      console.log(err);
+      done(err);
     }
-  ));
+  }
+));

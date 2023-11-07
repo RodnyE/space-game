@@ -1,0 +1,8 @@
+{
+    "name": "Módulo de Terraformación II",
+    "desc": "Una versión avanzada del módulo de terraformación diseñada para modificar la atmósfera y el entorno de un planeta o luna con mayor eficiencia.",
+    "require": {
+        "energy": 40
+    },
+    "temperature": 200
+}

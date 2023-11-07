@@ -21,6 +21,10 @@ const UserModel = (DataTypes) => {
         space_pos: {
             type: DataTypes.JSON,
             defaultValue: {x: -1 , y: -1}
+        },
+        inventory: {
+            type: DataTypes.JSON,
+            defaultValue: []
         }
     };
 };

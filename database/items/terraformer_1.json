@@ -1,0 +1,8 @@
+{
+    "name": "Módulo de Terraformación I",
+    "desc": "Un módulo de terraformación diseñado para modificar la atmósfera y el entorno de un planeta o luna con el fin de hacerlo habitable.",
+    "require": {
+        "energy": 30
+    },
+    "temperature": 100
+}

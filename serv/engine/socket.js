@@ -4,7 +4,6 @@ const _Space = require("./space/space.js");
 
 const Socket = async (io) => {
     const g = require("./socket-w.js").g(io);
-    //const g = sw.CreateNamespace("/game");
     const Space = new _Space(g);
     await Space.config();
     Space.Loop(15);

@@ -1,0 +1,8 @@
+{
+    "name": "Módulo de Terraformación III",
+    "desc": "La última versión del módulo de terraformación, capaz de realizar transformaciones atmosféricas y de entorno aún más avanzadas.",
+    "require": {
+        "energy": 50
+    },
+    "temperature": 300
+}

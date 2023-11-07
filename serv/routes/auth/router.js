@@ -53,8 +53,15 @@ router.use('/facebook',
     ));
 
 router.post('/login',
-  passport.authenticate('local', { successRedirect: '/game', failureRedirect: '/auth/login' }),
-  (req, res) => {}
+  passport.authenticate('local', {failureRedirect: "/auth",
+  failureFlash: true}),
+  (req, res) => {
+    if (req.header('user-agent').indexOf('Mobile') != -1) {
+        return res.redirect('/game');
+    } else {
+        return res.redirect('/game');
+    }
+  }
 );
 
 module.exports = router;
