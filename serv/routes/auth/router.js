@@ -52,16 +52,26 @@ router.use('/facebook',
     }
     ));
 
-router.post('/login',
-  passport.authenticate('local', {failureRedirect: "/auth",
-  failureFlash: true}),
-  (req, res) => {
-    if (req.header('user-agent').indexOf('Mobile') != -1) {
-        return res.redirect('/game');
-    } else {
-        return res.redirect('/game');
+    router.post('/login',
+    (req, res, next) => {
+      passport.authenticate('local', (err, user, info) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ status: false , message: 'SERVER_ERROR' });
+        }
+        if (!user) {
+          return res.status(401).json({ status: false , message: 'WRONG_PASS' });
+        }
+        req.logIn(user, (loginErr) => {
+          if (loginErr) {
+            console.log(loginErr);
+            return res.status(500).json({ status: false , message: 'SERVER_ERROR' });
+          }
+          return res.status(200).json({ status: true , message: 'LOGGED_IN' });
+        });
+      })(req, res, next);
     }
-  }
-);
+  );
+  
 
 module.exports = router;

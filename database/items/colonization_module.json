@@ -1,5 +1,6 @@
 {
-    "name": "Módulo de Colonización Alfa",
+    "name": "Módulo de Colonización",
+    "id": "cm1",
     "desc": "Un módulo de colonización diseñado para albergar a colonos y proporcionar los recursos esenciales para su supervivencia.",
     "require": {
         "energy": 50

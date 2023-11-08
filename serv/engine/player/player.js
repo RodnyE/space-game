@@ -2,6 +2,7 @@ const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
 const Maths = require(config.HELPERS + "/maths.js");
 const { Player, SpaceZone , Sun , Asteroid , Planet , BlackHole} = require(config.HELPERS + "/db.js");
+const Inventory = require("./inventory.js");
 class _Player {
     constructor(id, s) {
         this.id = id;
@@ -13,6 +14,7 @@ class _Player {
         this.enableMove;
         this.canMove = false;
         this.canSpaceWrap = false;
+        this.inventory = [];
     }
 
     async sync() {
@@ -30,13 +32,12 @@ class _Player {
         this.name = pj.name;
         this.pos = pj.pos;
         this.space_pos = pj.space_pos;
-        //await this.sendData();
-        //await this.sendSpaceData();
+        this.inventory = new Inventory(pj.inventory);
     }
 
     async sendData() {
 
-        await this.s.emit("player_data", { name: this.name, pos: this.pos ,a: this.a });
+        await this.s.emit("player_data", { name: this.name, pos: this.pos ,a: this.a , inventory: this.inventory.getInventory()});
     }
 
     async sendSpaceData() {
@@ -116,7 +117,6 @@ class _Player {
     async changeSpace(pos , space_pos , space){
         await this.leaveSpace(space);
         this.pos = pos;
-        //await this.sendData();
         await this.joinSpace(space_pos.x , space_pos.y , space);
     }
 

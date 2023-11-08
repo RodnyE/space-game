@@ -25,6 +25,10 @@ const UserModel = (DataTypes) => {
         inventory: {
             type: DataTypes.JSON,
             defaultValue: []
+        },
+        shortcuts: {
+            type: DataTypes.JSON,
+            defaultValue: []
         }
     };
 };
