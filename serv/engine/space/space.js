@@ -9,10 +9,12 @@ class _Space {
         this.space = {};
         this.pj_changes = {};
         this.players = {};
+        this.items = {};
+        this.buildings = {};
     }
 
     async config() {
-        const c = Math.ceil(Math.sqrt(await SpaceZone.count() - 1));
+        const c = Math.ceil(Math.sqrt(await SpaceZone.count() - config.SPACES.saved));
         this.space[-1 + "_" + -1] = {};
         this.pj_changes[-1 + "_" + -1] = {};
         this.space[-1 + "_" + 0] = {};
@@ -25,6 +27,8 @@ class _Space {
                 this.pj_changes[x + "_" + y] = {};
             }
         }
+        this.items = require("./items.js")();
+        this.buildings = require("./buildings.js")();
     }
 
     async addPlayer(player) {

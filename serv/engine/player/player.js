@@ -99,7 +99,8 @@ class _Player {
             pos: this.pos,
             a: this.a
         });
-        //if(x != -1 && y != -1) 
+        if(x == -1 && y == -1) this.inventory.setBlock(true);
+        else this.inventory.setBlock(false);
         //this.enableMove();
         this.canMove = true;
         this.canSpaceWrap = true;
