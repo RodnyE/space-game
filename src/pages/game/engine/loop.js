@@ -5,7 +5,6 @@ import { t2x, x2t } from "utils/scale"
 import { radian2angle } from "utils/conversion"
 
 const PI = Math.PI;
-let loopStep = 0;
 
 
 /**
@@ -15,6 +14,7 @@ let loopStep = 0;
  */
 export default function loop (gx) {
     const {
+        loopStep,
         layer1,
         layer2,
         hjumpFilter,
@@ -23,8 +23,9 @@ export default function loop (gx) {
         players,
         camera,
         spaceEntity,
-        joy,
         minimap,
+        moveStick,
+        aimStick,
     } = gx;
     
     let hjumpEnabled = false;
@@ -32,10 +33,14 @@ export default function loop (gx) {
     //
     // Update player !
     //
-    let targetRotation = Math.atan2(joy.y, joy.x);// + PI;
+    let targetRotation;
+    if (aimStick.joy.pressed) {
+        targetRotation = Math.atan2(aimStick.joy.y, aimStick.joy.x);
+    }
+    else targetRotation = Math.atan2(moveStick.joy.y, moveStick.joy.x);
     
-    let vx = player.speed * joy.x;
-    let vy = player.speed * joy.y;
+    let vx = player.speed * moveStick.joy.x;
+    let vy = player.speed * moveStick.joy.y;
     
     player.vx += (vx - player.vx) * 0.01;
     player.vy += (vy - player.vy) * 0.01; 
@@ -68,7 +73,7 @@ export default function loop (gx) {
     player.y = player_y;
     
     // joystick pressed !
-    if (joy.pressed) player.rotation += (targetRotation - player.rotation) * 0.09; 
+    if (aimStick.joy.pressed || moveStick.joy.pressed) player.rotation += (targetRotation - player.rotation) * 0.09; 
     
     
     //
@@ -98,10 +103,12 @@ export default function loop (gx) {
     if (hjumpEnabled && !gx.hjumpEnabled) {
         gx.hjumpEnabled = true; 
         hjumpFilter.enabled = true;
+        aimStick.renderable = false;
     }
     else if (!hjumpEnabled && gx.hjumpEnabled) {
         gx.hjumpEnabled = false;
         hjumpFilter.enabled = false;
+        aimStick.renderable = true;
     }
     
     
@@ -131,6 +138,4 @@ export default function loop (gx) {
     minimap.beginFill(0x00ff00);
     minimap.drawRect(player.x * minimap.k, player.y * minimap.k, 2, 2);
     
-    //debugText.text = player.rotation / PI + "π"
-    loopStep ++;
 }

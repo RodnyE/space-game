@@ -41,12 +41,43 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
         
         // Play background music
         gx.music = resources.spaceSound;
-        gx.music.play();
+        //gx.music.play();
         
         // 
+        gx.loopStep = 0;
         gx.loop = () => {
+            let { moveStick, aimStick } = gx;
+            
             loop(gx);
-            gx.joystickEntity.tickerLoop();
+            
+            // Update aim joystick
+            if (aimStick.joy.s === 1) {
+                aimStick.tickerLoop(10);
+                if (!resources.shoot_01_snd.playing()) resources.shoot_01_snd.play("shoot");
+                
+                // Animation every 10 frames
+                if (gx.loopStep % 10 === 0) {
+                    navigator.vibrate(50);
+                    aimStick.externalJoy.scale.set(1.2);
+                }
+                else {
+                    aimStick.externalJoy.scale.set(1);
+                }
+            }
+            else {
+                if (resources.shoot_01_snd.playing()) resources.shoot_01_snd.stop()
+                aimStick.tickerLoop();
+            }
+            
+            // Update movement joystick
+            if (moveStick.joy.s) {
+                moveStick.tickerLoop(10);
+            }
+            else {
+                moveStick.tickerLoop();
+            }
+            
+            gx.loopStep ++;
         }
         
         // Connect to server

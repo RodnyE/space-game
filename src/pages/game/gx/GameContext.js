@@ -66,7 +66,6 @@ export default class GameContext {
         this.layer2 = layer2;
         this.gameLayer = gameLayer;
          
-        
         // 
         let camera = new Camera(layer1, { 
             size: new Rectangle(0, 0, canvas.width, canvas.height),
@@ -110,17 +109,28 @@ export default class GameContext {
         this.player = player;
         
         
-        // Joystick !
-        let joystick = new JoystickCtrl({
+        // Movement Joystick
+        let moveStick = new JoystickCtrl({
             internalTexture: resources["int-joy"],
             externalTexture: resources["out-joy"],
             size: 250,
         });
-        joystick.x = 50;
-        joystick.y = - 50 + canvas.height - joystick.height;
-        scene.addChild(joystick);
-        this.joystickEntity = joystick;
-        this.joy = joystick.joy;
+        moveStick.x = 50;
+        moveStick.y = - 50 + canvas.height - moveStick.height;
+        scene.addChild(moveStick);
+        
+        // Shooting Joystick 
+        let aimStick = new JoystickCtrl({
+            internalTexture: resources["int-joy"],
+            externalTexture: resources["out-joy"],
+            size: 200,
+        });
+        aimStick.x = - 40 + canvas.width - aimStick.width;
+        aimStick.y = - 40 + canvas.height - aimStick.height;
+        scene.addChild(aimStick); 
+        
+        this.moveStick = moveStick;
+        this.aimStick = aimStick;
         
         
     }

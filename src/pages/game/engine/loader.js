@@ -5,6 +5,7 @@ import Loader from "gl/Loader"
 import shipImg from "assets/ships/ship_02.png"
 import spaceImg from "assets/background/outer-space.png"
 import spaceSnd from "assets/music/outer_space_01.aac"
+import shootSnd from "assets/music/shoot.mp3"
 
 /**
  * Create a imported images object
@@ -56,9 +57,20 @@ export default function createLoader () {
     loader.addSound({
         name: "spaceSound",
         cfg: {
-            src: [spaceSnd],
+            src: [spaceSnd], 
             loop: true,
             volume: 2,
+        }
+    });
+    loader.addSound({
+        name: "shoot_01_snd",
+        cfg: {
+            src: [shootSnd],
+            loop: true,
+            volume: 2,
+            sprite: {
+                shoot: [0, 1500],
+            }
         }
     });
     
