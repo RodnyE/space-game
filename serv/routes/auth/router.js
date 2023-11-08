@@ -57,17 +57,17 @@ router.use('/facebook',
       passport.authenticate('local', (err, user, info) => {
         if (err) {
           console.log(err);
-          return res.status(500).json({ status: false , message: 'Error de servidor' });
+          return res.status(500).json({ status: false , message: 'SERVER_ERROR' });
         }
         if (!user) {
-          return res.status(401).json({ status: false , message: 'Usuario o contraseña incorrectos' });
+          return res.status(401).json({ status: false , message: 'WRONG_PASS' });
         }
         req.logIn(user, (loginErr) => {
           if (loginErr) {
             console.log(loginErr);
-            return res.status(500).json({ status: false , message: 'Error de servidor' });
+            return res.status(500).json({ status: false , message: 'SERVER_ERROR' });
           }
-          return res.status(200).json({ status: true , message: 'Inicio de sesión exitoso' });
+          return res.status(200).json({ status: true , message: 'LOGGED_IN' });
         });
       })(req, res, next);
     }
