@@ -2,6 +2,7 @@ const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
 const { Player, SpaceZone, Planet, Op } = require(config.HELPERS + "/db.js");
 const Maths = require(config.HELPERS + "/maths.js");
+const {setItems}  = require("../player/inventory.js");
 
 class _Space {
     constructor(g) {
@@ -28,6 +29,7 @@ class _Space {
             }
         }
         this.items = require("./items.js")();
+        setItems(this.items);
         this.buildings = require("./buildings.js")();
     }
 

@@ -1,3 +1,9 @@
+let items = {};
+
+const setItems = (_items) => {
+    items = _items;
+}
+
 class Inventory {
     constructor(inventory, limit) {
         this.inventory = inventory;
@@ -18,6 +24,20 @@ class Inventory {
     // Return the inventory
     getInventory(){
         return this.inventory;
+    }
+
+    getItemData(slot){
+        if(slot){
+            if(!this.inventory[slot]) return {};
+            if(!this.items[this.inventory[slot].id]) return {};
+            else return this.items[this.inventory[slot].id];
+        }else{
+            let iData = [];
+            for(let i of this.inventory){
+                iData.push(this.items[i.id]);
+            }
+            return iData;
+        }
     }
 
     // Add an item to the inventory by ID and quantity
@@ -120,4 +140,4 @@ class Inventory {
     }
 }
 
-module.exports = Inventory;
+module.exports = {Inventory , setItems};

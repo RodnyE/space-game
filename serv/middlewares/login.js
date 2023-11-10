@@ -18,7 +18,6 @@ passport.use("local", new LocalStrategy(
       });
       done(null, user || created);
     } catch (err) {
-      console.log(err);
       done(err);
     }
   }

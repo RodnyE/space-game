@@ -2,7 +2,7 @@ const config = require("../../../config.js");
 const nameGen = require("../generation/nameGen.js");
 const Maths = require(config.HELPERS + "/maths.js");
 const { Player, SpaceZone , Sun , Asteroid , Planet , BlackHole} = require(config.HELPERS + "/db.js");
-const Inventory = require("./inventory.js");
+const {Inventory}  = require("./inventory.js");
 class _Player {
     constructor(id, s) {
         this.id = id;
