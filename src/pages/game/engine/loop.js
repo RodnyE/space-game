@@ -5,6 +5,7 @@ import { t2x, x2t } from "utils/scale"
 import { radian2angle } from "utils/conversion"
 
 const PI = Math.PI;
+const PI2 = Math.PI * 2;
 
 
 /**
@@ -26,6 +27,7 @@ export default function loop (gx) {
         minimap,
         moveStick,
         aimStick,
+        hjumpButton,
     } = gx;
     
     let hjumpEnabled = false;
@@ -33,11 +35,21 @@ export default function loop (gx) {
     //
     // Update player !
     //
+    /**
+     * Rotation joystick in radian
+     *      - π/2 
+     * - π          0
+     *   π          0
+     *        π/2 
+     */
     let targetRotation;
-    if (aimStick.joy.pressed) {
-        targetRotation = Math.atan2(aimStick.joy.y, aimStick.joy.x);
+    if (aimStick.joy.pressed || moveStick.joy.pressed) {
+        if (aimStick.joy.pressed) targetRotation = Math.atan2(aimStick.joy.y, aimStick.joy.x);
+        else targetRotation = Math.atan2(moveStick.joy.y, moveStick.joy.x);
     }
-    else targetRotation = Math.atan2(moveStick.joy.y, moveStick.joy.x);
+    else targetRotation = player.targetRotation
+    
+    if (targetRotation < 0) targetRotation += PI2;
     
     let vx = player.speed * moveStick.joy.x;
     let vy = player.speed * moveStick.joy.y;
@@ -73,8 +85,12 @@ export default function loop (gx) {
     player.y = player_y;
     
     // joystick pressed !
-    if (aimStick.joy.pressed || moveStick.joy.pressed) player.rotation += (targetRotation - player.rotation) * 0.09; 
-    
+    let diff = targetRotation - player.rotation;
+    if (diff > PI) diff -= PI2;
+    else if (diff < - PI) diff += PI2;
+        
+    player.rotation += diff * 0.09;
+    player.targetRotation = targetRotation;
     
     //
     // Update all players !
@@ -99,18 +115,43 @@ export default function loop (gx) {
     
     //
     // Hyperjump camera !
-    //
-    if (hjumpEnabled && !gx.hjumpEnabled) {
-        gx.hjumpEnabled = true; 
-        hjumpFilter.enabled = true;
-        aimStick.renderable = false;
+    // 
+    if (hjumpEnabled) {
+        // Set initial values and enable hjump
+        if (!gx.hjumpEnabled) {
+            let pos = player.toGlobal({x:0,y:0});
+            hjumpFilter.enabled = true;  
+            hjumpFilter.strength = 0; 
+            hjumpFilter.center = [
+                pos.x,
+                pos.y,
+            ];
+            gx.hjumpEnabled = true;
+            aimStick.renderable = false;
+            hjumpButton.renderable = true;
+        }
+        // Gradually increase the strength
+        hjumpFilter.strength += (0.1 - hjumpFilter.strength) * 0.09; 
+        
+    } 
+    else {
+        // Disable
+        if (gx.hjumpEnabled) {
+            gx.hjumpEnabled = false;
+            aimStick.alpha = 0;
+            aimStick.renderable = true; // Show the aimStick
+            hjumpButton.renderable = false; // Hide the hjump button
+        }
+        // Gradually decrease the strength of the filter until it reaches 0, and then disable the filter
+        if (hjumpFilter.strength > 0) {
+            hjumpFilter.strength -= hjumpFilter.strength * 0.09;
+            if (hjumpFilter.strength < 0.001) hjumpFilter.strength = 0; 
+        } 
+        else hjumpFilter.enabled = false; 
+        
+        // Gradually increase the opacity of aimStick
+        if (aimStick.alpha < 1) aimStick.alpha += 0.1;
     }
-    else if (!hjumpEnabled && gx.hjumpEnabled) {
-        gx.hjumpEnabled = false;
-        hjumpFilter.enabled = false;
-        aimStick.renderable = true;
-    }
-    
     
     //
     // Emit current player position to server

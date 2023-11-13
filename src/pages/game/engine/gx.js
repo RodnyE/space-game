@@ -77,6 +77,11 @@ export const initGameContext = (canvas) => new Promise((resolve) => {
                 moveStick.tickerLoop();
             }
             
+            gx.debug.text = 
+              "rotation " + (gx.player.rotation/Math.PI).toFixed(2) 
+            + "\ntargetRotation " + (gx.player.targetRotation/Math.PI).toFixed(2) 
+    
+            ;
             gx.loopStep ++;
         }
         
