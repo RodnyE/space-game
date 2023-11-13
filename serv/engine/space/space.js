@@ -3,6 +3,8 @@ const nameGen = require("../generation/nameGen.js");
 const { Player, SpaceZone, Planet, Op } = require(config.HELPERS + "/db.js");
 const Maths = require(config.HELPERS + "/maths.js");
 const {setItems}  = require("../player/inventory.js");
+const actions  = require("./actions.js");
+const Action = actions.Action;
 
 class _Space {
     constructor(g) {
@@ -30,6 +32,7 @@ class _Space {
         }
         this.items = require("./items.js")();
         setItems(this.items);
+        actions.setItems(this.items);
         this.buildings = require("./buildings.js")();
     }
 
@@ -77,8 +80,12 @@ class _Space {
 
                     }
                     const p = polarize(data);
+                    player.inventory.addItem("cm1" , 1 , true);
+                    player.inventory.addItem("tm3" , 1 , true);
+                    player.shortcuts.addShortcut("cm1" , 0);
+                    player.shortcuts.addShortcut("tm3" , 1);
                     await player.changeSpace(p, found, this.space);
-                    //player.canSpaceWrap = false;
+
                     return true;
                 } else {
                     let mx = (data.x < 0 ? -1 : (data.x >= 1000 ? 1 : 0));
@@ -120,9 +127,18 @@ class _Space {
                 }
             });
         });
+
         await player.joinSpace(space_pos.x, space_pos.y, this.space);
         player.enableMove();
         player.nameChange(this.space);
+
+        player.On("shortcut" , async(data) => {
+            const item = player.shortcuts.getShortcut(data);
+            if(!item) return;
+            const action = new Action(item);
+            await action.executeItem(player , this.g);
+        });
+
         player.On("disconnect", async (data) => {
             player.leaveSpace(this.space);
             const p = await Player.findOne({ where: { user_id: player.id } });

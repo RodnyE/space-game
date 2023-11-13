@@ -3,6 +3,7 @@ const nameGen = require("../generation/nameGen.js");
 const Maths = require(config.HELPERS + "/maths.js");
 const { Player, SpaceZone , Sun , Asteroid , Planet , BlackHole} = require(config.HELPERS + "/db.js");
 const {Inventory}  = require("./inventory.js");
+const Shortcuts  = require("./shortcuts.js");
 class _Player {
     constructor(id, s) {
         this.id = id;
@@ -11,10 +12,12 @@ class _Player {
         this.pos;
         this.a = 0;
         this.space_pos;
+        this.stats = {};
         this.enableMove;
         this.canMove = false;
         this.canSpaceWrap = false;
         this.inventory = [];
+        this.shortcuts = [];
     }
 
     async sync() {
@@ -32,12 +35,14 @@ class _Player {
         this.name = pj.name;
         this.pos = pj.pos;
         this.space_pos = pj.space_pos;
+        this.stats = pj.stats;
         this.inventory = new Inventory(pj.inventory);
+        this.shortcuts = new Shortcuts(pj.shortcuts);
     }
 
     async sendData() {
 
-        await this.s.emit("player_data", { name: this.name, pos: this.pos ,a: this.a , inventory: this.inventory.getInventory()});
+        await this.s.emit("player_data", { name: this.name, pos: this.pos ,a: this.a , stats: this.stats , inventory: this.inventory.getInventory() , shortcuts: this.shortcuts.shortcuts});
     }
 
     async sendSpaceData() {
@@ -56,7 +61,7 @@ class _Player {
                 }
             });
             planets = await Planet.findAll({
-                attributes: ["name" , "x" , "y","temperature" , "diameter" ],
+                attributes: ["name" , "x" , "y","temperature" , "diameter" , "isTerraforming" , "owner"],
                 where: {
                     spacezone_id: space.id
                 }

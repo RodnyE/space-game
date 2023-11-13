@@ -26,6 +26,10 @@ class Inventory {
         return this.inventory;
     }
 
+    hasItem(id) {
+        return this.inventory.some((item) => item.id === id && item.quantity > 0);
+    }
+
     getItemData(slot){
         if(slot){
             if(!this.inventory[slot]) return {};
@@ -41,8 +45,8 @@ class Inventory {
     }
 
     // Add an item to the inventory by ID and quantity
-    addItem(id, quantity) {
-        if (this.blocked) {
+    addItem(id, quantity , force) {
+        if (this.blocked && !force) {
             return { message: "INVENTORY_BLOCKED" };
         }
 
