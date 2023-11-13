@@ -3,6 +3,7 @@ import {
     Rectangle, 
     Matrix,
     Graphics, 
+    Text,
     Color 
 } from "pixi.js"
 import { ZoomBlurFilter } from "@pixi/filter-zoom-blur"
@@ -11,6 +12,7 @@ import Camera from "gl/Camera"
 import Container from "gl/Container"
 import Entity from "gl/Entity"
 
+import ButtonCtrl from "gx/ButtonCtrl"
 import JoystickCtrl from "gx/JoystickCtrl"
 import Player from "gx/Player"
 import Planet from "gx/Planet"
@@ -129,8 +131,19 @@ export default class GameContext {
         aimStick.y = - 40 + canvas.height - aimStick.height;
         scene.addChild(aimStick); 
         
+        // HyperJump Button
+        let hjumpButton = new ButtonCtrl(resources["int-joy"]);
+        hjumpButton.position = aimStick.position;
+        scene.addChild(hjumpButton);
+        
+        
+        // Debug text
+        this.debug = new Text("");
+        scene.addChild(this.debug);
+        
         this.moveStick = moveStick;
         this.aimStick = aimStick;
+        this.hjumpButton = hjumpButton;
         
         
     }
